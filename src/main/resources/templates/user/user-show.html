@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Criminal</title>
+</head>
+<body>
+
+<header class="header">
+
+  <nav class="header__navigation navigation">
+
+    <ul class="navigation__list">
+      <li class="navigation__item">
+        <a class="navigation__link navigation__link_active">Home</a>
+      </li>
+      <li class="navigation__item">
+
+        <form action="#" th:action="@{/logout}" method="POST">
+
+          <input type="submit" value="Logout">
+        </form>
+        <!--                <a class="navigation__link" th:href="@{/register/showRegistrationForm}">Sign up</a>-->
+      </li>
+      <li class="navigation__item">
+        <a class="navigation__link" href="https://www.interpol.int/">The real Interpol website</a>
+      </li>
+    </ul>
+
+    <p class="header__hashtag">#CurrencyExchanger</p>
+
+  </nav>
+</header>
+
+<!--Main-->
+
+<div class="main">
+
+  <!--Main content-->
+  <div class="main_content">
+    <!--Main balance -->
+    <div class="about">
+      <h1 class="about_name" th:text="${criminal.familyName} + ', ' + ${criminal.forename}"></h1>
+
+      <div th:each="country: ${criminal.countries}">
+
+        <p class="about_description col-md-3" th:text="'Wanted by ' + ${country.getName()}"></p>
+
+      </div>
+
+
+      </div>
+
+    <!-- Modal window confirmation -->
+
+    <a class="navigation__link example">Only for admins</a>
+    <div class="modal">
+      <div class="modal-content">
+        <p class="answerWindow">Confirm Your Transaction<br />
+          Don't fool me please, I'm just learning Spring Security.......</p>
+        <nav>
+          <ul class="navigation__list">
+            <li class="navigation__item">
+              <a class="navigation__link" href="movies/all.html">Yes</a>
+            </li>
+            <li class="navigation__item">
+              <a class="navigation__link" href="home.html">Not</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Done modal window -->
+
+    <a class="navigation__link example">Only for admins</a>
+    <div class="modal">
+      <div class="modal-content">
+        <p class="answerWindow">Are you sure you're an admin?<br />
+          Don't fool me please, I'm just learning Spring Security.......</p>
+        <nav>
+          <ul class="navigation__list">
+            <li class="navigation__item">
+              <a class="navigation__link" href="movies/all.html">Yes</a>
+            </li>
+            <li class="navigation__item">
+              <a class="navigation__link" href="home.html">Not</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!--Identity particulars-->
+    <div class="particulars">
+      <h3 class="title">Identity particulars</h3>
+      <table>
+        <tbody>
+        <tr>
+          <td>Family name</td>
+          <td th:text="${criminal.familyName}"></td>
+        </tr>
+        <tr>
+          <td>Forename</td>
+          <td th:text="${criminal.forename}"></td>
+        </tr>
+        <tr>
+          <td>Alias</td>
+          <td th:text="${criminal.alias}"></td>
+        </tr>
+        <tr>
+          <td>Gender</td>
+          <td th:text="${criminal.gender}"></td>
+        </tr>
+        <tr>
+          <td>Date of birth</td>
+          <td th:text="${#dates.format(criminal.dateOfBirth, 'dd/MM/yyyy')}"></td>
+        </tr>
+        <tr>
+          <td>Nationality</td>
+          <td th:each="tempNationality: ${criminal.nationalities}"
+              th:text="${tempNationality.nationality}"></td>
+        </tr>
+        <tr>
+          <td>Special signs</td>
+          <td th:text="${criminal.specialSigns}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="particulars">
+      <h3 class="title">Physical description</h3>
+      <table>
+        <tbody>
+        <tr>
+          <td>Height</td>
+          <td th:text="${criminal.height}"></td>
+        </tr>
+        <tr>
+          <td>Color of hair</td>
+          <td th:text="${criminal.colorOfHair}"></td>
+        </tr>
+        <tr>
+          <td>Color of eyes</td>
+          <td th:text="${criminal.eyeColor}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="particulars">
+      <h3 class="title">Details</h3>
+      <table>
+        <tbody>
+        <tr>
+          <td>Language(s) spoken</td>
+          <td th:each="tempLanguage: ${criminal.languages}"
+              th:text="${tempLanguage.getName()}"></td>
+        </tr>
+        <tr>
+          <td>Last place of residence</td>
+          <td th:text="${criminal.lastPlaceOfResidence}"></td>
+        </tr>
+        <tr>
+          <td>Criminal profession</td>
+          <td th:text="${criminal.criminalProfession}"></td>
+        </tr>
+        <tr>
+          <td>Active</td>
+          <td th:text="${criminal.active}"></td>
+        </tr>
+        <tr>
+          <td>Criminal structure</td>
+          <td th:text="${criminal.criminalStructure.getName()}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="particulars">
+      <h3 class="title">Linked with</h3>
+
+      <div th:each="accomplice: ${criminal.criminalStructure.crimeMembers}" class="col-md-3">
+
+        <div class="criminal-box">
+
+          <a th:href="@{/criminals/(criminalId=${accomplice.id})}">
+            <img src="criminal.photoUrl" alt="" class="img-responsive">
+          </a>
+
+          <a th:href="@{/criminals/(criminalId=${accomplice.id})}">
+            <h1 th:text="|${accomplice.familyName} ${accomplice.forename}|"></h1>
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="particulars">
+
+      <h3 class="title">Charges</h3>
+      <p><i>Published as provided by requesting entity</i></p>
+      <p th:text="${criminal.theLatestCriminalCase}"></p>
+    </div>
+
+    <div sec:authorize="hasRole('SPECIALAGENT')">
+
+      <!-- Add EDIT and ADD TO ARCHIVE and DELETE buttons ... this is ONLY for the SPESIALAGENTS -->
+
+      <p>
+        <a th:href="@{/criminals/editCriminal}">Edit</a>
+      </p>
+
+      <hr>
+
+      <p>
+        <a th:href="@{/criminals/addToArchive}">Add to archive</a>
+      </p>
+
+      <hr>
+
+      <p>
+        <a th:href="@{/criminals/delete}">Delete</a>
+      </p>
+
+    </div>
+
+
+
+  </div>
+  <!--Main balance-->
+  <aside class="sidebar">
+    <img src="img/photo.jpg" alt="Criminal photo" class="photo">
+  </aside>
+
+</div>
+
+<label for="txtSearch">Input</label><input id="txtSearch" type="text" name="currency"/>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var equations = /*[[${equations}]]*/;
+    /*]]>*/
+
+    $('#txtSearch').on('keyup', function(){
+        var value = $(this).val();
+        console.log('Value = ' + value);
+    });
+</script>
+
+
+</body>
+</html>

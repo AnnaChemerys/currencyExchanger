@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>User transactions</title>
+</head>
+<body>
+
+<div class="container">
+
+    <h3>Transactions </h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Sold</th>
+            <th></th>
+            <th>Received</th>
+            <th></th>
+            <th>Calculated commission fee</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempTransaction : ${transactions}">
+
+            <td th:text="${tempTransaction.sell.amountOfMoney + ' ' tempTransaction.sell.currencyCode}" />
+            <td><img th:src="@{images/arrow-up.png}"></td>
+            <td th:text="${tempTransaction.receive.amountOfMoney + ' ' tempTransaction.receive.currencyCode}" />
+            <td><img th:src="@{images/arrow-down.png}"></td>
+            <td th:text="${tempTransaction.calculatedCommissionFee}" />
+            <td th:text="${tempTransaction.creationTime}" />
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var equations = /*[[${equations}]]*/;
+    /*]]>*/
+
+    $('#txtSearch').on('keyup', function(){
+        var value = $(this).val();
+        console.log('Value = ' + value);
+    });
+</script>
+
+</body>
+</html>

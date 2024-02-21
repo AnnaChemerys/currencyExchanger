@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Home Little Interpol Page</title>
+
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+<header class="header">
+
+    <nav class="header__navigation navigation">
+
+        <ul class="navigation__list">
+            <li class="navigation__item">
+                <a class="navigation__link navigation__link_active">Home</a>
+            </li>
+            <li class="navigation__item">
+                <a class="navigation__link" th:href="@{/showMyLoginPage}">Sign in</a>
+            </li>
+            <li class="navigation__item">
+                <a class="navigation__link" th:href="@{/register/showRegistrationForm}">Sign up</a>
+            </li>
+        </ul>
+
+        <p class="header__hashtag">#CurrencyExchanger</p>
+
+        <ul class="header__social social">
+            <li class="social__item">
+                <a href="https://www.linkedin.com/company/interpol/" class="social__link social__link_linkedin"></a>
+            </li>
+            <li class="social__item">
+                <a href="https://www.facebook.com/InterpolHQ" class="social__link social__link_facebook"></a>
+            </li>
+            <li class="social__item">
+                <a href="https://www.instagram.com/interpol_hq/" class="social__link social__link_instagram"></a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+</body>
+</html>
