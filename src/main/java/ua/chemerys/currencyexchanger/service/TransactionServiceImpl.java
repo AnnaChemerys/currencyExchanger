@@ -2,18 +2,19 @@ package ua.chemerys.currencyexchanger.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.chemerys.currencyexchanger.entity.SumUnit;
 import ua.chemerys.currencyexchanger.entity.Transaction;
 import ua.chemerys.currencyexchanger.entity.User;
-//import ua.chemerys.currencyexchanger.repository.CurrencyRepository;
-import ua.chemerys.currencyexchanger.repository.ExchangerDetailsRepository;
-import ua.chemerys.currencyexchanger.repository.TransactionRepository;
-import ua.chemerys.currencyexchanger.repository.UserRepository;
+import ua.chemerys.currencyexchanger.repository.*;
+import ua.chemerys.currencyexchanger.util.RatesParser;
+import ua.chemerys.currencyexchanger.webDto.WebTransaction;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -24,28 +25,24 @@ public class TransactionServiceImpl implements TransactionService {
 
     private ExchangerDetailsRepository exchangerDetailsRepository;
 
+    private BalanceRepository balanceRepository;
+
+    private SumUnitRepository sumUnitRepository;
+
+    private RatesParser ratesParser;
+
     @Autowired
     public TransactionServiceImpl(TransactionRepository transactionRepository, UserRepository userRepository,
-                                  ExchangerDetailsRepository exchangerDetailsRepository) {
+                                  ExchangerDetailsRepository exchangerDetailsRepository,
+                                  BalanceRepository balanceRepository, SumUnitRepository sumUnitRepository,
+                                  RatesParser ratesParser) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
         this.exchangerDetailsRepository = exchangerDetailsRepository;
+        this.balanceRepository = balanceRepository;
+        this.sumUnitRepository = sumUnitRepository;
+        this.ratesParser = ratesParser;
     }
-
-    //    private CurrencyRepository currencyRepository;
-
-
-//    @Autowired
-//    public TransactionServiceImpl(TransactionRepository transactionRepository, UserRepository userRepository,
-//                                  ExchangerDetailsRepository exchangerDetailsRepository,
-//                                  CurrencyRepository currencyRepository) {
-//        this.transactionRepository = transactionRepository;
-//        this.userRepository = userRepository;
-//        this.exchangerDetailsRepository = exchangerDetailsRepository;
-//        this.currencyRepository = currencyRepository;
-//    }
-
-    //    private UserService userService;
 
     @Override
     public List<Transaction> findAll() {
@@ -74,45 +71,77 @@ public class TransactionServiceImpl implements TransactionService {
 
     }
 
+    //    @Override
+//    public void save(WebTransaction webTransaction) {
+//
+//        Transaction transaction = new Transaction();
+//
+//        transaction.
+//    }
+//
     @Override
-    public BigDecimal getBalance(String username, String currencyCode) {
+    public Transaction addTransaction(WebTransaction webTransaction) {
 
-        return userRepository.findByUserName(username).getUserBalances().stream()
-                .filter(balance -> balance.getCurrencyCode().equals(currencyCode)).findFirst().get()
-                .getSumOnTheBalance();
-//        return userRepository.findByUserName(userName).getUserBalance(typeOfCurrency).getSumOfBalance();
+        User currentUser = userRepository.findByUserName(webTransaction.getUserName());
+
+        Transaction newTransaction = new Transaction();
+        SumUnit sellSumUnit = new SumUnit();
+        SumUnit receiveSumUnit = new SumUnit();
+
+        sellSumUnit.setAmountOfMoney(webTransaction.getSellSum());
+        sellSumUnit.setCurrencyCode(webTransaction.getSellCurrencyCode());
+        sellSumUnit.setTransaction(newTransaction);
+
+        receiveSumUnit.setAmountOfMoney(webTransaction.getReceiveSum());
+        receiveSumUnit.setCurrencyCode(webTransaction.getReceiveCurrencyCode());
+        receiveSumUnit.setTransaction(newTransaction);
+
+        newTransaction.setSell(sellSumUnit);
+        newTransaction.setReceive(receiveSumUnit);
+        newTransaction.setUser(currentUser);
+        newTransaction.setCalculatedCommissionFee(calculateCommissionFee(webTransaction.getUserName(), webTransaction));
+        newTransaction.setCreationTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        newTransaction.setExchangerDetails(exchangerDetailsRepository.findAll().stream().findFirst().get());
+
+        transactionRepository.save(newTransaction);
+
+        return newTransaction;
+
     }
 
-    @Override
-    public BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney) {
-        return null;
-    }
+//    @Override
+//    public BigDecimal getBalance(String username, String currencyCode) {
+//
+//        return userRepository.findByUserName(username).getUserBalances().stream()
+//                .filter(balance -> balance.getCurrencyCode().equals(currencyCode)).findFirst().get()
+//                .getSumOnTheBalance();
+//    }
+
+//    @Override
+//    public BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney) {
+//        return null;
+//    }
+
+//    @Override
+//    public BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney, String userName) {
+////        if (validateTransaction(sellMoney)) {
+////
+////        }
+//
+//        userRepository.findByUserName(userName).setCountOfTransactions(userRepository.findByUserName(userName).getCountOfTransactions() + 1);
+//        return null;
+//    }
 
     @Override
-    public BigDecimal calculateCommissionFee() {
-        return null;
-    }
-
-    @Override
-    public BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney, String username) {
-        if (validateTransaction(sellMoney)) {
-
-        }
-
-            userRepository.findByUserName(userName).getCountOfTransactions()++;
-        return null;
-    }
-
-    @Override
-    public BigDecimal calculateCommissionFee(User currentUser, Transaction transaction) {
+    public BigDecimal calculateCommissionFee(String userName, WebTransaction webTransaction) {
 
         float commissionFee = exchangerDetailsRepository.findAll().stream().findFirst().get().getCommissionFee();
         BigDecimal calculatedCommissionFee;
 
-        if (currentUser.getCountOfTransactions() < 5) {
+        if (userRepository.findByUserName(userName).getCountOfTransactions() < 5) {
             calculatedCommissionFee = BigDecimal.valueOf(0);
         } else {
-            calculatedCommissionFee = transaction.getSell().getAmountOfMoney()
+            calculatedCommissionFee = webTransaction.getSellSum()
                     .multiply(BigDecimal.valueOf(commissionFee)).
                     divide(BigDecimal.valueOf(100))
                     .setScale(2, RoundingMode.HALF_DOWN);
@@ -121,14 +150,35 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
 //    @Override
-//    public boolean validateTransaction(int id) {
-//        return findById(id).getSell().getCountOfMoney().add(commissionFee()).compareTo(getBalance()) >= 0;
+//    public BigDecimal calculateCommissionFee(String userName, Transaction transaction) {
+//
+//        float commissionFee = exchangerDetailsRepository.findAll().stream().findFirst().get().getCommissionFee();
+//        BigDecimal calculatedCommissionFee;
+//
+//        if (userRepository.findByUserName(userName).getCountOfTransactions() < 5) {
+//            calculatedCommissionFee = BigDecimal.valueOf(0);
+//        } else {
+//            calculatedCommissionFee = transaction.getSell().getAmountOfMoney()
+//                    .multiply(BigDecimal.valueOf(commissionFee)).
+//                    divide(BigDecimal.valueOf(100))
+//                    .setScale(2, RoundingMode.HALF_DOWN);
+//        }
+//        return calculatedCommissionFee;
 //    }
 
-    @Override
-    public boolean validateTransaction(BigDecimal sumForTransaction) {
-        return sumForTransaction.add(calculateCommissionFee()).compareTo(getBalance()) >= 0;
-    }
+//    @Override
+//    public boolean validateTransaction(String userName, WebTransaction webTransaction) {
+//
+//        return webTransaction.getSellSum().add(calculateCommissionFee(userName, webTransaction))
+//                .compareTo(balanceRepository
+//                        .findBalanceByUsernameAndCurrencyCode(userName, webTransaction.getSellCurrencyCode())
+//                        .getSumOnTheBalance()) >= 0;
+//    }
+
+//    @Override
+//    public boolean validateTransaction(BigDecimal sumForTransaction) {
+//        return sumForTransaction.add(calculateCommissionFee()).compareTo(getBalance()) >= 0;
+//    }
 
     @Override
     public List<Transaction> findByUsername(String username) {
@@ -137,25 +187,14 @@ public class TransactionServiceImpl implements TransactionService {
                 .stream().filter(transaction -> transaction.getUser().getUserName().equals(username)).toList();
     }
 
-//    @Override
-//    public List<Transaction> findByUser(User theUser) {
-//        return null;
-//    }
-
-    @Override
-    public BigDecimal calculateSellFromReceive(BigDecimal receive, String currencyCode) {
-        return null;
-    }
-
     @Override
     public BigDecimal calculateSellFromReceive(BigDecimal receive, String receiveCurrencyCode, String sellCurrencyCode) {
 
         BigDecimal calculatedSell;
 
-        if (currencyRepository.findByCurrencyCode(receiveCurrencyCode).equals("EUR")) {
-            calculatedSell = receive.multiply(currencyRepository.findByCurrencyCode(receiveCurrencyCode).getRate());
+        if (receiveCurrencyCode.equals("EUR")) {
+            calculatedSell = receive.multiply(ratesParser.getCurrencyRate(receiveCurrencyCode));
         } else {
-
             calculatedSell = receive.multiply(calculateCoefficientForCurrenciesExceptEUR(sellCurrencyCode, receiveCurrencyCode));
         }
 
@@ -164,18 +203,24 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public BigDecimal calculateReceiveFromSell(BigDecimal sell, String currencyCode) {
+    public BigDecimal calculateReceiveFromSell(BigDecimal sell, String sellCurrencyCode, String receiveCurrencyCode) {
 
-        BigDecimal calculatedReceive = sell.divide(currencyRepository.findByCurrencyCode(currencyCode).getRate()).
-                setScale(2, RoundingMode.HALF_DOWN);
+        BigDecimal calculatedReceive;
+
+        if (sellCurrencyCode.equals("EUR")) {
+            calculatedReceive = sell.divide(ratesParser.getCurrencyRate(receiveCurrencyCode))
+                    .setScale(2, RoundingMode.HALF_DOWN);
+        } else {
+            calculatedReceive = sell.divide(calculateCoefficientForCurrenciesExceptEUR(receiveCurrencyCode, sellCurrencyCode))
+                    .setScale(2, RoundingMode.HALF_DOWN);
+        }
         return calculatedReceive;
     }
 
     @Override
-    public BigDecimal calculateCoefficientForCurrenciesExceptEUR(BigDecimal sellRate, BigDecimal receiveRate) {
+    public BigDecimal calculateCoefficientForCurrenciesExceptEUR(String receiveCurrencyCode, String sellCurrencyCode) {
 
-        BigDecimal coefficient = sellRate.divide(receiveRate).setScale(2, RoundingMode.HALF_DOWN);
-
-        return coefficient;
+        return ratesParser.getCurrencyRate(sellCurrencyCode).divide(ratesParser.getCurrencyRate(receiveCurrencyCode))
+                .setScale(2, RoundingMode.HALF_DOWN);
     }
 }

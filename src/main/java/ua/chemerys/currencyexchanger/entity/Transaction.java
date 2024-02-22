@@ -18,19 +18,17 @@ public class Transaction {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "sell_sum_unit_id")
+    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
     private SumUnit sell;
 
-    @OneToOne
-    @JoinColumn(name = "receive_sum_unit_id")
+    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
     private SumUnit receive;
 
-    @OneToOne
-    @JoinColumn(name = "exchanger_details")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "exchanger_details_id")
     private ExchangerDetails exchangerDetails;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -43,12 +41,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(SumUnit sell, SumUnit receive, ExchangerDetails exchangerDetails, User user,
-                       LocalDateTime creationTime, BigDecimal calculatedCommissionFee) {
-        this.sell = sell;
-        this.receive = receive;
-        this.exchangerDetails = exchangerDetails;
-        this.user = user;
+    public Transaction(LocalDateTime creationTime, BigDecimal calculatedCommissionFee) {
         this.creationTime = creationTime;
         this.calculatedCommissionFee = calculatedCommissionFee;
     }

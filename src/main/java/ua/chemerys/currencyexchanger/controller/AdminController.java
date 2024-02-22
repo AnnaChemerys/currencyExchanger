@@ -54,10 +54,18 @@ public class AdminController {
     @GetMapping("/user-balances")
     public String getTransactionsByUser(Model theModel) {
 
-        List<Transaction> transactionsByUser = adminService.getTransactionsByUser();
-
-        theModel.addAttribute("transactions", transactionsByUser);
+//        List<Transaction> transactionsByUser = adminService.getTransactionsByUser();
+//
+//        theModel.addAttribute("transactions", transactionsByUser);
 
         return "admin/user-transactions";
     }
+
+    @GetMapping("/administration-page")
+    public String getAdministrationPage(Model theModel) {
+
+        return "admin/administration-page";
+    }
 }
+
+

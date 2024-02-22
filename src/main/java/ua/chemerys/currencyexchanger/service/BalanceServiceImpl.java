@@ -3,11 +3,9 @@ package ua.chemerys.currencyexchanger.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.chemerys.currencyexchanger.entity.Balance;
-//import ua.chemerys.currencyexchanger.entity.Currency;
 import ua.chemerys.currencyexchanger.entity.Transaction;
 import ua.chemerys.currencyexchanger.entity.User;
 import ua.chemerys.currencyexchanger.repository.BalanceRepository;
-//import ua.chemerys.currencyexchanger.repository.CurrencyRepository;
 import ua.chemerys.currencyexchanger.repository.UserRepository;
 
 import java.math.BigDecimal;
@@ -27,16 +25,6 @@ public class BalanceServiceImpl implements BalanceService {
         this.balanceRepository = balanceRepository;
         this.userRepository = userRepository;
     }
-
-    //    private CurrencyRepository currencyRepository;
-
-//    @Autowired
-//    public BalanceServiceImpl(BalanceRepository balanceRepository, UserRepository userRepository,
-//                              CurrencyRepository currencyRepository) {
-//        this.balanceRepository = balanceRepository;
-//        this.userRepository = userRepository;
-//        this.currencyRepository = currencyRepository;
-//    }
 
     @Override
     public List<Balance> findAll() {
@@ -63,6 +51,19 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
+    public void addBalance(String userName, String currencyCode, BigDecimal sumOfReceive) {
+
+        User currentUser = userRepository.findByUserName(userName);
+
+        Balance balance = new Balance();
+        balance.setSumOnTheBalance(sumOfReceive);
+
+        balance.setCurrencyCode(currencyCode);
+        balance.setUser(currentUser);
+        balanceRepository.save(balance);
+    }
+
+    @Override
     public void addBalance(Long theUserId, String currencyCode, BigDecimal sumOfReceive) {
 
         Optional<User> optionalUser = userRepository.findById(theUserId);
@@ -72,20 +73,31 @@ public class BalanceServiceImpl implements BalanceService {
             balance.setSumOnTheBalance(sumOfReceive);
 
             balance.setCurrencyCode(currencyCode);
-            //balance.setTypeOfCurrency(currencyRepository.findByCurrencyCode(currencyCode));
             balance.setUser(user);
             balanceRepository.save(balance);
         });
     }
 
-    // ToDo
     @Override
-    public void update(long theId, Balance theBalance) {
+    public void updateUserBalances(User theUser, Transaction theTransaction) {
 
-        Balance balanceToBeUpdated = findById(theId);
-        balanceToBeUpdated.setSumOnTheBalance(theBalance.getSumOnTheBalance());
-        balanceRepository.save(balanceToBeUpdated);
+        Balance receiveBalance = getByUserAndCurrencyCode(theUser, theTransaction.getReceive().getCurrencyCode());
 
+        if (receiveBalance != null) {
+            receiveBalance.setSumOnTheBalance(receiveBalance.getSumOnTheBalance()
+                    .add(theTransaction.getReceive().getAmountOfMoney()));
+        } else {
+            addBalance(theUser.getUserName(), theTransaction.getReceive().getCurrencyCode(),
+                    theTransaction.getReceive().getAmountOfMoney());
+        }
+
+        Balance sellBalance = getByUserAndCurrencyCode(theUser, theTransaction.getSell().getCurrencyCode());
+
+        sellBalance.setSumOnTheBalance(sellBalance.getSumOnTheBalance()
+                .subtract(theTransaction.getSell().getAmountOfMoney()).subtract(theTransaction
+                        .getCalculatedCommissionFee()));
+
+        balanceRepository.save(sellBalance);
     }
 
     @Override
@@ -93,28 +105,52 @@ public class BalanceServiceImpl implements BalanceService {
         return null;
     }
 
-//    @Override
-//    public Balance findByTypeOfCurrency(Currency typeOfCurrency) {
-//        return null;
-//    }
-
     @Override
     public Set<Balance> findByUser(User theUser) {
         return balanceRepository.findByUser(theUser);
     }
 
-    @Override
-    public Balance findByUserAndTypeOfCurrency(long theUserId, String currencyCode) {
-        return null;
-    }
-
 //    @Override
-//    public Balance findByUserAndTypeOfCurrency(User theUser, Currency theTypeOfCurrency) {
+//    public Balance findByUserAndTypeOfCurrency(long theUserId, String currencyCode) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Balance getByUserIdAndCurrencyCode(long theUserId, String currencyCode) {
 //        return null;
 //    }
 
     @Override
-    public Balance getByUserIdAndCurrencyCode(long theUserId, String currencyCode) {
-        return null;
+    public Balance getByUserAndCurrencyCode(User theUser, String currencyCode) {
+
+        Balance theBalance;
+
+        Optional<Balance> optionalBalance = balanceRepository.findAll()
+                .stream().filter(balance -> balance.getUser().equals(theUser))
+                .filter(balance -> balance.getCurrencyCode().equals(currencyCode))
+                .findFirst();
+        if (optionalBalance.isPresent()) {
+            theBalance = optionalBalance.get();
+        } else {
+            return null;
+        }
+        return theBalance;
+    }
+
+    @Override
+    public Balance getByUserNameAndCurrencyCode(String userName, String currencyCode) {
+
+        Balance theBalance;
+
+        Optional<Balance> optionalBalance = balanceRepository.findAll()
+                .stream().filter(balance -> balance.getUser().getUserName().equals(userName))
+                .filter(balance -> balance.getCurrencyCode().equals(currencyCode))
+                .findFirst();
+        if (optionalBalance.isPresent()) {
+            theBalance = optionalBalance.get();
+        } else {
+            return null;
+        }
+        return theBalance;
     }
 }

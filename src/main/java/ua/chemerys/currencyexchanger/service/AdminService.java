@@ -4,7 +4,6 @@ import ua.chemerys.currencyexchanger.entity.Balance;
 import ua.chemerys.currencyexchanger.entity.Transaction;
 import ua.chemerys.currencyexchanger.entity.User;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface AdminService {
@@ -18,4 +17,8 @@ public interface AdminService {
     List<Transaction> getAllTransactions();
 
     List<Balance> getAllBalances();
+
+    List<Transaction> getTransactionsByUser(User theUser);
+
+    List<Balance> getBalanceByUser(User theUser);
 }

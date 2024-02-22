@@ -9,12 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import ua.chemerys.currencyexchanger.entity.Balance;
-//import ua.chemerys.currencyexchanger.entity.Currency;
 import ua.chemerys.currencyexchanger.entity.User;
 import ua.chemerys.currencyexchanger.service.BalanceService;
 import ua.chemerys.currencyexchanger.service.UserService;
-import ua.chemerys.currencyexchanger.user.WebUser;
+import ua.chemerys.currencyexchanger.webDto.WebUser;
 
 import java.math.BigDecimal;
 import java.util.logging.Logger;
@@ -34,11 +32,6 @@ public class RegistrationController {
         this.userService = userService;
         this.balanceService = balanceService;
     }
-
-    //    @Autowired
-//    public RegistrationController(UserService userService) {
-//        this.userService = userService;
-//    }
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -66,13 +59,13 @@ public class RegistrationController {
         logger.info("Processing registration form for: " + userName);
 
         // form validation
-        if (theBindingResult.hasErrors()){
+        if (theBindingResult.hasErrors()) {
             return "register/registration-form";
         }
 
         // check the database if user already exists
         User existing = userService.findByUserName(userName);
-        if (existing != null){
+        if (existing != null) {
             theModel.addAttribute("webUser", new WebUser());
             theModel.addAttribute("registrationError", "User name already exists.");
 
@@ -85,8 +78,10 @@ public class RegistrationController {
 
         logger.info("Successfully created user: " + userName);
 
-        balanceService.addBalance(userService.findByUserName(userName).getId(), "EUR",
-                BigDecimal.valueOf(1000));
+        balanceService.addBalance(userName, "EUR", BigDecimal.valueOf(1000));
+
+//        balanceService.addBalance(userService.findByUserName(userName).getId(), "EUR",
+//                BigDecimal.valueOf(1000));
 
         // place user in the web http session for later use
         session.setAttribute("user", theWebUser);

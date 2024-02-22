@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -36,12 +37,11 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    //ToDo
-//    @OneToOne
-//    private Balance userBalance;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Balance> userBalances;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Transaction> userTransactions;
 
     @Column(name = "count_of_transactions")
     private int countOfTransactions;
@@ -67,5 +67,18 @@ public class User {
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return enabled == user.enabled && Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, password, enabled, firstName, lastName, email, roles);
     }
 }

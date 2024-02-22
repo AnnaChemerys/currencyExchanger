@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class CurrencyExchangerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CurrencyExchangerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CurrencyExchangerApplication.class, args);
+    }
 
 }

@@ -2,23 +2,38 @@ package ua.chemerys.currencyexchanger.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ua.chemerys.currencyexchanger.service.BalanceService;
 import ua.chemerys.currencyexchanger.service.TransactionService;
+import ua.chemerys.currencyexchanger.webDto.WebTransaction;
 
-import java.math.BigDecimal;
-
+@Component
 public class CorrectnessOfInputTransactionConstraintValidator
-        implements ConstraintValidator<CorrectnessOfInputTransaction, BigDecimal> {
+        implements ConstraintValidator<CorrectnessOfInputTransaction, WebTransaction> {
 
-    private TransactionService exchangerService;
+    private TransactionService transactionService;
+    private BalanceService balanceService;
+
+    @Autowired
+    public CorrectnessOfInputTransactionConstraintValidator(TransactionService transactionService, BalanceService balanceService) {
+        this.transactionService = transactionService;
+        this.balanceService = balanceService;
+    }
 
     @Override
-    public boolean isValid(BigDecimal value, ConstraintValidatorContext context) {
-        return false;
+    public boolean isValid(WebTransaction webTransaction, ConstraintValidatorContext constraintValidatorContext) {
+
+        return validateTransaction(webTransaction);
     }
 
-    public boolean isCorrectInput(BigDecimal theSumForTransaction) {
-//        return exchangerService.findById(id).getSell().getCountOfMoney().add(commissionFee()).compareTo(getBalance()) >= 0;
+    public boolean validateTransaction(WebTransaction webTransaction) {
 
-        return exchangerService.validateTransaction(theSumForTransaction);
+        return webTransaction.getSellSum()
+                .add(transactionService.calculateCommissionFee(webTransaction.getUserName(), webTransaction))
+                .compareTo(balanceService
+                        .getByUserNameAndCurrencyCode(webTransaction.getUserName(), webTransaction.getSellCurrencyCode())
+                        .getSumOnTheBalance()) >= 0;
     }
+
 }

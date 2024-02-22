@@ -1,7 +1,7 @@
 package ua.chemerys.currencyexchanger.service;
 
 import ua.chemerys.currencyexchanger.entity.Balance;
-//import ua.chemerys.currencyexchanger.entity.Currency;
+import ua.chemerys.currencyexchanger.entity.Transaction;
 import ua.chemerys.currencyexchanger.entity.User;
 
 import java.math.BigDecimal;
@@ -18,17 +18,21 @@ public interface BalanceService {
 
     void addBalance(Long theUserId, String currencyCode, BigDecimal sumOfReceive);
 
-    void update(long theId, Balance theBalance);
+    void addBalance(String userName, String currencyCode, BigDecimal sumOfReceive);
+
+//    void update(long theId, Balance theBalance);
+
+    void updateUserBalances(User theUser, Transaction theTransaction);
 
     Balance findByTypeOfCurrency(String currencyCode);
 
-//    Balance findByTypeOfCurrency(Currency typeOfCurrency);
-
     Set<Balance> findByUser(User theUser);
 
-    Balance findByUserAndTypeOfCurrency(long theUserId, String currencyCode);
+//    Balance findByUserAndTypeOfCurrency(long theUserId, String currencyCode);
+//
+//    Balance getByUserIdAndCurrencyCode(long theUserId, String currencyCode);
 
-//    Balance findByUserAndTypeOfCurrency(User theUser, Currency theTypeOfCurrency);
+    Balance getByUserAndCurrencyCode(User theUser, String currencyCode);
 
-    Balance getByUserIdAndCurrencyCode(long theUserId, String currencyCode);
+    Balance getByUserNameAndCurrencyCode(String userName, String currencyCode);
 }

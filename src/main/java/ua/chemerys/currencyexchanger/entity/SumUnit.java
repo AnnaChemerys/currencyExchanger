@@ -23,27 +23,15 @@ public class SumUnit {
     @Column(name = "currency_code")
     private String currencyCode;
 
-    // ToDo
-//    @OneToOne
-//    @JoinColumn(name = "currency_id")
-//    private Currency typeOfCurrency;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
-
-    public SumUnit(BigDecimal amountOfMoney, String currencyCode, Transaction transaction) {
-        this.amountOfMoney = amountOfMoney;
-        this.currencyCode = currencyCode;
-        this.transaction = transaction;
-    }
 
     public SumUnit() {
     }
 
-    //    public SumUnit(BigDecimal amountOfMoney, Currency typeOfCurrency, Transaction transaction) {
-//        this.amountOfMoney = amountOfMoney;
-//        this.typeOfCurrency = typeOfCurrency;
-//        this.transaction = transaction;
-//    }
+    public SumUnit(BigDecimal amountOfMoney, String currencyCode) {
+        this.amountOfMoney = amountOfMoney;
+        this.currencyCode = currencyCode;
+    }
 }

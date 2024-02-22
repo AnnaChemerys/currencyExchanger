@@ -1,7 +1,7 @@
 package ua.chemerys.currencyexchanger.service;
 
 import ua.chemerys.currencyexchanger.entity.Transaction;
-import ua.chemerys.currencyexchanger.entity.User;
+import ua.chemerys.currencyexchanger.webDto.WebTransaction;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,22 +14,25 @@ public interface TransactionService {
 
     void save(Transaction transaction);
 
-    BigDecimal getBalance(String currencyCode, String username);
+    //    void save(WebTransaction webTransaction);
+    Transaction addTransaction(WebTransaction webTransaction);
 
-    BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney);
+//    void addTransaction(WebTransaction webTransaction);
 
-    BigDecimal calculateCommissionFee();
+//    BigDecimal getBalance(String currencyCode, String username);
 
-    boolean validateTransaction(BigDecimal sumForTransaction);
+//    BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney);
+
+    BigDecimal calculateCommissionFee(String userName, WebTransaction webTransaction);
+
+//    boolean validateTransaction(String userName, WebTransaction webTransaction);
 
     List<Transaction> findByUsername(String username);
 
-//    List<Transaction> findByUser(User theUser);
+    BigDecimal calculateSellFromReceive(BigDecimal receive, String receiveCurrencyCode, String sellCurrencyCode);
 
-    BigDecimal calculateSellFromReceive(BigDecimal receive, String currencyCode);
+    BigDecimal calculateReceiveFromSell(BigDecimal sell, String sellCurrencyCode, String receiveCurrencyCode);
 
-    BigDecimal calculateReceiveFromSell(BigDecimal sell, String currencyCode);
-
-    BigDecimal calculateCoefficientForCurrenciesExceptEUR(BigDecimal sellRate, BigDecimal receiveRate);
+    BigDecimal calculateCoefficientForCurrenciesExceptEUR(String receiveCurrencyCode, String sellCurrencyCode);
 
 }

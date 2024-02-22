@@ -1,11 +1,8 @@
 package ua.chemerys.currencyexchanger.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import ua.chemerys.currencyexchanger.entity.Balance;
 import ua.chemerys.currencyexchanger.entity.User;
-import ua.chemerys.currencyexchanger.user.WebUser;
-
-import java.util.Set;
+import ua.chemerys.currencyexchanger.webDto.WebUser;
 
 public interface UserService extends UserDetailsService {
 
@@ -13,7 +10,5 @@ public interface UserService extends UserDetailsService {
 
     void save(WebUser webUser);
 
-//    void setMainBalanceToNewUser(User user);
-
-//    Set<Balance> setMainBalanceToNewUser(User newUser);
+    void incrementUserCountTransactions(User theUser);
 }

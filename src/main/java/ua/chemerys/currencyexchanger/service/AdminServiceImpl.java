@@ -11,6 +11,7 @@ import ua.chemerys.currencyexchanger.repository.TransactionRepository;
 import ua.chemerys.currencyexchanger.repository.UserRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -54,6 +55,20 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Balance> getAllBalances() {
         return balanceRepository.findAll();
+    }
+
+    @Override
+    public List<Transaction> getTransactionsByUser(User theUser) {
+        return transactionRepository.findAll()
+                .stream().filter(transaction -> transaction.getUser().equals(theUser))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Balance> getBalanceByUser(User theUser) {
+        return balanceRepository.findAll()
+                .stream().filter(balance -> balance.getUser().equals(theUser))
+                .collect(Collectors.toList());
     }
 
     @Override
