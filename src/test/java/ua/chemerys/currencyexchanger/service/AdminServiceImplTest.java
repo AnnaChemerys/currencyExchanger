@@ -94,28 +94,6 @@ public class AdminServiceImplTest {
         verify(balanceRepository).findAll();
     }
 
-//    @Test
-//    void testGetTransactionsByUserWhenCalledThenTransactionsByUserAreReturned() {
-//        when(transactionRepository.findAll()).thenReturn(Collections.singletonList(transaction));
-//        when(transaction.getUser()).thenReturn(user);
-//
-//        List<Transaction> transactions = adminService.getTransactionsByUser(user);
-//
-//        assertEquals(Collections.singletonList(transaction), transactions);
-//        verify(transactionRepository).findAll();
-//    }
-//
-//    @Test
-//    void testGetBalanceByUserWhenCalledThenBalancesByUserAreReturned() {
-//        when(balanceRepository.findAll()).thenReturn(Collections.singletonList(balance));
-//        when(balance.getUser()).thenReturn(user);
-//
-//        List<Balance> balances = adminService.getBalanceByUser(user);
-//
-//        assertEquals(Collections.singletonList(balance), balances);
-//        verify(balanceRepository).findAll();
-//    }
-
     @Test
     void testChangeCountOfFreeTransactionsWhenCalledThenCountOfFreeTransactionsIsChanged() {
         int newCountOfFreeTransactions = 10;
