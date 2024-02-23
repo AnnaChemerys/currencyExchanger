@@ -19,6 +19,7 @@ CREATE TABLE `user` (
   `first_name` varchar(64) NOT NULL,
   `last_name` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
+  `count_of_transactions` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -33,11 +34,11 @@ CREATE TABLE `user` (
 -- Default passwords here are: fun123
 --
 
-INSERT INTO `user` (`username`,`password`,`enabled`, `first_name`, `last_name`, `email`)
+INSERT INTO `user` (`username`,`password`,`enabled`, `first_name`, `last_name`, `email`, `count_of_transactions`)
 VALUES 
-('john','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'John', 'Doe', 'john@luv2code.com'),
-('mary','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Mary', 'Smith', 'mary@luv2code.com'),
-('susan','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Susan', 'Public', 'susan@luv2code.com');
+('john','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'John', 'Doe', 'john@luv2code.com', 0),
+('mary','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Mary', 'Smith', 'mary@luv2code.com', 0),
+('susan','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Susan', 'Public', 'susan@luv2code.com', 0);
 
 
 --
@@ -94,7 +95,5 @@ SET FOREIGN_KEY_CHECKS = 1;
 INSERT INTO `users_roles` (user_id,role_id)
 VALUES 
 (1, 1),
-(2, 1),
 (2, 2),
-(3, 1),
 (3, 1)

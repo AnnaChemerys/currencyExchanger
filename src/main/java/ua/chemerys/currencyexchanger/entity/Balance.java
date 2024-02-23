@@ -24,7 +24,8 @@ public class Balance {
     @Column(name = "sum_on_the_balance")
     private BigDecimal sumOnTheBalance;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 

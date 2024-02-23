@@ -6,24 +6,19 @@ DROP TABLE IF EXISTS `transaction`;
 
 CREATE TABLE `transaction` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `commission_fee` float NOT NULL,
-  `count_of_free_transactions` int NOT NULL,
-  `sell_sum_unit_id` int NOT NULL,
-  `receive_sum_unit_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-
-  KEY `FK_SELL_SUM_UNIT_idx` (`sell_sum_unit_id`),
-  CONSTRAINT `FK_SELL_SUM_UNIT` FOREIGN KEY (`sell_sum_unit_id`) 
-  REFERENCES `sum_unit` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-
-  KEY `FK_RECEIVE_SUM_UNIT_idx` (`receive_sum_unit`),
-  CONSTRAINT `FK_RECEIVE_SUM_UNIT` FOREIGN KEY (`receive_sum_unit`) 
-  REFERENCES `sum_unit` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  `exchanger_details_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `creation_time` timestamp NOT NULL,
+  `calculated_commission_fee` decimal(10, 6) DEFAULT NULL,
+  PRIMARY KEY (`id`), 
+  
+  KEY `FK_EXCHANGER_DETAILS_idx` (`exchanger_details_id`),
+  CONSTRAINT `_EXCHANGER_DETAILS` FOREIGN KEY (`exchanger_details_id`) 
+  REFERENCES `exchanger_details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 
   KEY `FK_USER_idx` (`user_id`),
   CONSTRAINT `FK_USER` FOREIGN KEY (`user_id`) 
-  REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -31,18 +26,14 @@ DROP TABLE IF EXISTS `balance`;
 
 CREATE TABLE `balance` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `currency_id` int NOT NULL,
-  `sum_on_the_balance` money??? NOT NULL,
-  `user_id` int NOT NULL,
+  `currency_code` varchar(3) NOT NULL,
+  `sum_on_the_balance` decimal(10, 6) NOT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  
-  KEY `FK_CURRENCY_idx` (`currency_id`),
-  CONSTRAINT `FK_CURRENCY` FOREIGN KEY (`currency_id`) 
-  REFERENCES `currency` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   
   KEY `FK_USER_idx` (`user_id`),
   CONSTRAINT `FK_USER` FOREIGN KEY (`user_id`) 
-  REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1; 
 
@@ -50,19 +41,28 @@ DROP TABLE IF EXISTS `sum_unit`;
 
 CREATE TABLE `sum_unit` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `amount_of_money` money??? NOT NULL,
-  `currency_id` int NOT NULL,
-  `transaction_id` int NOT NULL,
+  `amount_of_money` decimal(10,6) NOT NULL,
+  `currency_code` varchar(3) NOT NULL,
+  `transaction_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  
-  KEY `FK_CURRENCY_idx` (`currency_id`),
-  CONSTRAINT `FK_CURRENCY` FOREIGN KEY (`currency_id`) 
-  REFERENCES `currency` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   
   KEY `FK_TRANSACTION_idx` (`transaction_id`),
   CONSTRAINT `FK_TRANSACTION` FOREIGN KEY (`transaction_id`) 
-  REFERENCES `transaction` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  REFERENCES `transaction` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1; 
+
+DROP TABLE IF EXISTS `exchanger_details`;
+
+CREATE TABLE `exchanger_details`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `commission_fee` float NOT NULL,
+  `count_of_free_transactions` int NOT NULL,
+  PRIMARY KEY (`id`)
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1; 
+
+INSERT INTO `exchanger_details` (`commission_fee`, `count_of_free_transactions`) 
+VALUES (0.7, 5)

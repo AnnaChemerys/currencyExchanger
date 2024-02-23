@@ -28,7 +28,8 @@ public class Transaction {
     @JoinColumn(name = "exchanger_details_id")
     private ExchangerDetails exchangerDetails;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 

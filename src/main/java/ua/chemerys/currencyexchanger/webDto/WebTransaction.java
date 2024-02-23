@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import ua.chemerys.currencyexchanger.validation.CorrectnessOfInputTransaction;
 
 import java.math.BigDecimal;
 
@@ -26,5 +27,15 @@ public class WebTransaction {
     private String userName;
 
     public WebTransaction() {
+    }
+
+    @CorrectnessOfInputTransaction
+    public WebTransaction(@NotNull String sellCurrencyCode, BigDecimal sellSum, @NotNull String receiveCurrencyCode,
+                          BigDecimal receiveSum, String userName) {
+        this.sellCurrencyCode = sellCurrencyCode;
+        this.sellSum = sellSum;
+        this.receiveCurrencyCode = receiveCurrencyCode;
+        this.receiveSum = receiveSum;
+        this.userName = userName;
     }
 }
