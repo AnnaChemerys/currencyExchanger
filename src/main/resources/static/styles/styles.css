@@ -7,8 +7,6 @@ html {
 }
 
 body {
-
-    width: 60%;
     height: 100vh;
     min-width: 320px;
     font-family: Roboto, sans-serif;
@@ -30,7 +28,7 @@ button {
 }
 
 a {
-    color: inherit;
+    color: white;
     text-decoration: none;
 }
 
@@ -51,8 +49,9 @@ h1, h2, h3, p {
     padding-top: 9px;
     padding-bottom: 9px;
     position: relative;
-    background-color: cornflowerblue;
+    background-color: #303030;
     color: white;
+    text-color: white;
 }
 
 .navigation {

@@ -3,7 +3,10 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Criminal</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+    <title>Currency converter</title>
 </head>
 <body>
 
@@ -16,7 +19,7 @@
                 <a class="navigation__link navigation__link_active">Currency converter</a>
             </li>
             <li class="navigation__item">
-                <a class="navigation__link" href="https://www.interpol.int/">My transactions</a>
+                <a class="navigation__link" th:href="@{/exchanger/transactions}">My transactions</a>
             </li>
             <li class="navigation__item">
 
@@ -64,14 +67,14 @@
     <!--Main content-->
     <div class="main_content">
 
-        <form action="#" th:action="@{/exchanger/save}"
-              th:object="${transaction}" method="POST">
+        <form action="#" th:action="@{/exchanger/processFormForTransaction}"
+              th:object="${webTransaction}" method="POST">
 
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
                 <tr>
                     <td>
-                        <select th:field="*{sell.currencyCode}">
+                        <select th:field="*{sellCurrencyCode}">
                             <option value="">Select currency</option>
                             <option th:each="currency : ${currencyCode}" th:value="${currency}"
                                     th:text="${currency}"></option>
@@ -90,15 +93,14 @@
         <a class="navigation__link example">Submit</a>
         <div class="modal">
             <div class="modal-content">
-                <p class="answerWindow">Confirm Your Transaction<br/>
-                    Don't fool me please, I'm just learning Spring Security.......</p>
+                <p class="answerWindow">Confirm Your Transaction<br/></p>
                 <nav>
                     <ul class="navigation__list">
                         <li class="navigation__item">
-                            <a class="navigation__link" href="movies/all.html">Yes</a>
+                            <a class="navigation__link" href="">Yes</a>
                         </li>
                         <li class="navigation__item">
-                            <a class="navigation__link" href="home.html">Not</a>
+                            <a class="navigation__link" href="">Not</a>
                         </li>
                     </ul>
                 </nav>
@@ -112,14 +114,14 @@
             <div class="modal-content">
 
                 <p class="confirmationTitle">Currency converted</p>
-                <p class="answerWindow" th:utext="${'You have converted ' + transaction.sell.amountOfMoney + ' ' +
-        transaction.sell.currencyCode + ' to ' + transaction.receive.amountOfMoney + ' ' +
-        transaction.receive.currencyCode + '. Commission fee: ' + transaction.calculatedCommissionFee + ' ' +
-        transaction.sell.currencyCode + '.'}"></p>
+                <p class="answerWindow" th:utext="${'You have converted ' + webTransaction.sellSum + ' ' +
+        webTransaction.sellCurrencyCode + ' to ' + webTransaction.receiveSum + ' ' +
+        webTransaction.receiveCurrencyCode + '. Commission fee: ' + webTransaction.calculatedCommissionFee + ' ' +
+        webTransaction.sellCurrencyCode + '.'}"></p>
                 <nav>
                     <ul class="navigation__list">
                         <li class="navigation__item">
-                            <a class="navigation__link" href="movies/all.html">Done</a>
+                            <a class="navigation__link" href="">Done</a>
                         </li>
                     </ul>
                 </nav>
@@ -128,28 +130,10 @@
     </div>
     <!--Main balance-->
     <aside class="sidebar">
-        <img src="img/photo.jpg" alt="Criminal photo" class="photo">
+        <!-- Main balance -->
     </aside>
 
 </div>
-
-<label for="txtSearch">Input</label><input id="txtSearch" type="text" name="currency"/>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var equations = /*[[${equations}]]*/;
-    /*]]>*/
-
-    $('#txtSearch').on('keyup', function(){
-        var value = $(this).val();
-        console.log('Value = ' + value);
-    });
-
-
-</script>
-
 
 </body>
 </html>

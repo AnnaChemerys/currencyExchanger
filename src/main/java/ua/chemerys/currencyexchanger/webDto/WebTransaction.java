@@ -26,6 +26,8 @@ public class WebTransaction {
 
     private String userName;
 
+    private BigDecimal calculatedCommissionFee;
+
     public WebTransaction() {
     }
 

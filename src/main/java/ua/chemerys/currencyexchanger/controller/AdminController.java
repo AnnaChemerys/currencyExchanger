@@ -31,7 +31,7 @@ public class AdminController {
         return "admin/list-users";
     }
 
-    @GetMapping("/users-balances")
+    @GetMapping("/usersBalances")
     public String allUsersBalances(Model theModel) {
 
         List<Balance> balances = adminService.getAllBalances();
@@ -41,7 +41,7 @@ public class AdminController {
         return "admin/list-balances";
     }
 
-    @GetMapping("users-transactions")
+    @GetMapping("/users-transactions")
     public String allUsersTransactions(Model theModel) {
 
         List<Transaction> allUsersTransactions = adminService.getAllTransactions();

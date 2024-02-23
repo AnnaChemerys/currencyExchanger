@@ -23,13 +23,21 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/exchanger")
-@AllArgsConstructor
+
 public class UserExchangerController {
 
     private UserService userService;
     private BalanceService balanceService;
     private TransactionService transactionService;
     private RatesParser ratesParser;
+
+    public UserExchangerController(UserService userService, BalanceService balanceService,
+                                   TransactionService transactionService, RatesParser ratesParser) {
+        this.userService = userService;
+        this.balanceService = balanceService;
+        this.transactionService = transactionService;
+        this.ratesParser = ratesParser;
+    }
 
     @GetMapping("/showFormForTransaction")
     private String showFormForTransaction(Principal principal, ModelMap modelMap) {
@@ -42,17 +50,19 @@ public class UserExchangerController {
 
         List<String> currencyCode = ratesParser.getListCurrenciesCodes();
 
+        WebTransaction webTransaction = new WebTransaction();
+
         // set user in the model prepopulate form
 
         modelMap.addAttribute("user", theUser);
 
         modelMap.addAttribute("currencyCode", currencyCode);
 
-        modelMap.addAttribute("webTransaction", new WebTransaction());
+        modelMap.addAttribute("webTransaction", webTransaction);
 
         // send over to our form
 
-        return "user/user-exchanger";
+        return "user/user-show";
     }
 
     @PostMapping("/processFormForTransaction")
