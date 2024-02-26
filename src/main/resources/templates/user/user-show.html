@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet"/>
 
     <link th:href="@{/fonts/icomoon/style.css}" rel="stylesheet"/>
 
@@ -15,6 +15,9 @@
 
     <!-- Bootstrap CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/nunito-font.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css}" rel="stylesheet" type="text/css"/>
 
     <!-- Style -->
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
@@ -55,7 +58,7 @@
 
 <div class="container">
 
-    <div class="table-responsive">
+    <div class="table-responsive-main">
 
 <!--        <p>-->
 <!--            User: <span sec:authentication="principal.username"></span>-->
@@ -90,45 +93,46 @@
 
     </div>
 
+
     <!--Main content-->
     <div class="main_content">
 
         <form action="#" th:action="@{/exchanger/processFormForTransaction}"
               th:object="${webTransaction}" method="POST">
 
-            <table class="table-responsive">
-                <thead class="table-dark">
-                <tr>
+<!--            <table class="table-responsive">-->
+<!--                <thead class="table-dark">-->
+<!--                <tr>-->
 
-                    <img>
+<!--                    <img>-->
 
-                    <td>Sell</td>
-                    <td>
-                        <select th:field="*{sellCurrencyCode}">
-                            <option value="">Select currency</option>
-                            <option th:each="currency : ${currencyCode}" th:value="${currency}"
-                                    th:text="${currency}"></option>
-                        </select>
-                    </td>
-                </tr>
+<!--                    <td>Sell</td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{sellCurrencyCode}">-->
+<!--                            <option value="">Select currency</option>-->
+<!--                            <option th:each="currency : ${currencyCode}" th:value="${currency}"-->
+<!--                                    th:text="${currency}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
 
-                <tr>
+<!--                <tr>-->
 
-                    <img>
+<!--                    <img>-->
 
-                    <td>Receive</td>
-                    <td>
-                        <select th:field="*{sellCurrencyCode}">
-                            <option value="">Select currency</option>
-                            <option th:each="currency : ${currencyCode}" th:value="${currency}"
-                                    th:text="${currency}"></option>
-                        </select>
-                    </td>
-                </tr>
+<!--                    <td>Receive</td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{sellCurrencyCode}">-->
+<!--                            <option value="">Select currency</option>-->
+<!--                            <option th:each="currency : ${currencyCode}" th:value="${currency}"-->
+<!--                                    th:text="${currency}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
 
-                </thead>
+<!--                </thead>-->
 
-            </table>
+<!--            </table>-->
 
             <button type="submit" class="btn btn-info col-2">Save</button>
         </form>
@@ -181,7 +185,103 @@
 
 </div>
 
+<div class="page-content">
+    <div class="wizard-v5-content">
+        <div class="wizard-form">
+            <form class="form-register" id="form-register" th:action="@{/exchanger/processFormForTransaction}"
+                  th:object="${webTransaction}" method="POST">
+                <div id="form-total">
+                    <!-- SECTION 1 -->
+                    <h2>
+                        <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
+                        <span class="step-text">Convert</span>
+                    </h2>
+                    <section>
+                        <div class="inner">
+                            <div class="form-row">
+                                <div class="form-holder">
+                                    <label for="sell_sum" class="special-label">Sell</label>
+                                    <input type="number" placeholder="ex: 100" class="form-control" id="sell_sum" name="sell_sum">
+                                </div>
+
+                                <select th:field="*{sellCurrencyCode}" id="sellCurrencyCode" class="form-control">
+                                    <option value="">Select currency</option>
+                                    <option th:each="currency : ${currencyCode}" th:value="${currency}"
+                                            th:text="${currency}"></option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-row form-row-date">
+                                <div class="form-holder form-holder-2">
+                                    <div class="form-holder">
+                                        <label for="receive_sum" class="special-label">Receive</label>
+                                        <input type="number" placeholder="ex: 100" class="form-control" id="receive_sum" name="receive_sum">
+                                    </div>
+
+                                    <br/>
+
+                                    <select th:field="*{receiveCurrencyCode}" id="receiveCurrencyCode" class="form-control">
+                                        <option value="">Select currency</option>
+                                        <option th:each="currency : ${currencyCode}" th:value="${currency}"
+                                                th:text="${currency}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <h2>
+                        <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
+                        <span class="step-text">Confirm Details</span>
+                    </h2>
+                    <section>
+                        <div class="inner">
+                            <h3>Confirm Details</h3>
+                            <div class="form-row table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                    <tr class="space-row">
+                                        <th>Full Name:</th>
+                                        <td id="fullname-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Sell sum:</th>
+                                        <td id="sell_sum_val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Sell currency code:</th>
+                                        <td id="sellCurrencyCode-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Receive sum:</th>
+                                        <td id="receive_sum-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Receive currency code:</th>
+                                        <td id="receiveCurrencyCode-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Calculated commission fee:</th>
+                                        <td id=""></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery.steps.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>

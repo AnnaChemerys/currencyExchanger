@@ -79,7 +79,7 @@ public class UserExchangerController {
         User theUser = userService.findByUserName(principal.getName());
 
         if (theBindingResult.hasErrors()) {
-            return "user/user-exchanger";
+            return "user/user-show";
         } else {
 
             Transaction newTransaction = transactionService.addTransaction(webTransaction);
@@ -87,7 +87,7 @@ public class UserExchangerController {
 
             balanceService.updateUserBalances(theUser, newTransaction);
         }
-        return "redirect:/user/user-show";
+        return "redirect:/exchanger/showFormForTransaction";
     }
 
     @GetMapping("/transactions")
