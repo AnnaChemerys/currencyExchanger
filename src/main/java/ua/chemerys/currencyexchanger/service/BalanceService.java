@@ -26,7 +26,7 @@ public interface BalanceService {
 
     Balance findByTypeOfCurrency(String currencyCode);
 
-    Set<Balance> findByUser(User theUser);
+    List<Balance> findByUser(User theUser);
 
 //    Balance findByUserAndTypeOfCurrency(long theUserId, String currencyCode);
 //

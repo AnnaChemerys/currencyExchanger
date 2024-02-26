@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.chemerys.currencyexchanger.entity.Balance;
 import ua.chemerys.currencyexchanger.entity.Transaction;
 import ua.chemerys.currencyexchanger.entity.User;
 import ua.chemerys.currencyexchanger.service.BalanceService;
@@ -52,6 +53,8 @@ public class UserExchangerController {
 
         WebTransaction webTransaction = new WebTransaction();
 
+        List<Balance> balances = balanceService.findByUser(theUser);
+
         // set user in the model prepopulate form
 
         modelMap.addAttribute("user", theUser);
@@ -59,6 +62,8 @@ public class UserExchangerController {
         modelMap.addAttribute("currencyCode", currencyCode);
 
         modelMap.addAttribute("webTransaction", webTransaction);
+
+        modelMap.addAttribute("balances", balances);
 
         // send over to our form
 

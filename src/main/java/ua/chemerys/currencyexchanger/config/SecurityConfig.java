@@ -1,5 +1,6 @@
 package ua.chemerys.currencyexchanger.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,8 +12,11 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import ua.chemerys.currencyexchanger.repository.RoleRepository;
+import ua.chemerys.currencyexchanger.repository.UserRepository;
 import ua.chemerys.currencyexchanger.securityhandler.UrlAuthenticationSuccessHandler;
 import ua.chemerys.currencyexchanger.service.UserService;
+import ua.chemerys.currencyexchanger.service.UserServiceImpl;
 
 import javax.sql.DataSource;
 
@@ -26,11 +30,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new UrlAuthenticationSuccessHandler();
-    }
-
     //authenticationProvider bean definition
     @Bean
     public DaoAuthenticationProvider authenticationProvider(UserService userService) {
@@ -41,20 +40,22 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationSuccessHandler urlAuthenticationSuccessHandler) throws Exception {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
                                 //.requestMatchers("/").hasRole("EMPLOYEE")
                                 .requestMatchers("/users/**").hasRole("USER")
                                 .requestMatchers("/admins/**").hasRole("ADMIN")
+                                .requestMatchers("/register/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form ->
                         form
                                 .loginPage("/showMyLoginPage")
                                 .loginProcessingUrl("/authenticateTheUser")
-                                .successHandler(authenticationSuccessHandler())
+
+                                .successHandler(urlAuthenticationSuccessHandler)
                                 .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)

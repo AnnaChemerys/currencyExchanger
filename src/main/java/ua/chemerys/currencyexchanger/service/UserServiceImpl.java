@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(webUser.getFirstName());
         user.setLastName(webUser.getLastName());
         user.setEmail(webUser.getEmail());
+        user.setEnabled(true);
 
         // give user default role of "user"
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));

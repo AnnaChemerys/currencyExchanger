@@ -6,10 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link th:href="@{/fonts/icomoon/style.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Style -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
     <title>Users</title>
 </head>
 
 <body>
+
+<div class="content">
 
 <header class="header">
 
@@ -45,31 +59,29 @@
 
 <div class="container">
 
-    <h3>Registered users</h3>
-    <hr>
+    <h3 class="mb-5">Registered users</h3>
 
-    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="nameOfCreator"/>
+<!--    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="nameOfCreator"/>-->
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <table class="table table-striped custom-table">
+        <thead>
         <tr>
 
-            <th>Full name</th>
-            <th></th>
-            <th></th>
+            <th scope="col">Full name</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="tempUser : ${users}">
+        <tr th:each="tempUser : ${users}" scope="row">
 
             <td th:text="${tempUser.firstName + ' ' + tempUser.lastName}"></td>
             <td>
-                <a th:href="@{/show_transactions/{id}(id=${tempUser.id})}" class="btn btn-sm btn-outline-primary">Balances</a>
+                <a th:href="@{/show_transactions/{id}(id=${tempUser.id})}" class="more">Balances</a>
             </td>
             <td>
-                <a th:href="@{/show_balances/{id}(id=${tempUser.id})}"
-                   class="btn btn-sm btn-outline-info">Transactions</a>
+                <a th:href="@{/show_balances/{id}(id=${tempUser.id})}" class="more">Transactions</a>
             </td>
 
         </tr>
@@ -77,6 +89,13 @@
     </table>
 
 </div>
+
+</div>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 

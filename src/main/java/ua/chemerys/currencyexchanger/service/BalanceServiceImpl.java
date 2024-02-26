@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BalanceServiceImpl implements BalanceService {
@@ -106,8 +107,9 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public Set<Balance> findByUser(User theUser) {
-        return balanceRepository.findByUser(theUser);
+    public List<Balance> findByUser(User theUser) {
+
+        return balanceRepository.findAll().stream().filter(balance -> balance.getUser().equals(theUser)).toList();
     }
 
 //    @Override
