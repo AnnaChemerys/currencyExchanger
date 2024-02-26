@@ -58,7 +58,7 @@
 
 <div class="container">
 
-    <div class="table-responsive-main">
+    <div class="table-responsive">
 
 <!--        <p>-->
 <!--            User: <span sec:authentication="principal.username"></span>-->
@@ -93,188 +93,194 @@
 
     </div>
 
-
-    <!--Main content-->
-    <div class="main_content">
-
-        <form action="#" th:action="@{/exchanger/processFormForTransaction}"
-              th:object="${webTransaction}" method="POST">
-
-<!--            <table class="table-responsive">-->
-<!--                <thead class="table-dark">-->
-<!--                <tr>-->
-
-<!--                    <img>-->
-
-<!--                    <td>Sell</td>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{sellCurrencyCode}">-->
-<!--                            <option value="">Select currency</option>-->
-<!--                            <option th:each="currency : ${currencyCode}" th:value="${currency}"-->
-<!--                                    th:text="${currency}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                </tr>-->
-
-<!--                <tr>-->
-
-<!--                    <img>-->
-
-<!--                    <td>Receive</td>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{sellCurrencyCode}">-->
-<!--                            <option value="">Select currency</option>-->
-<!--                            <option th:each="currency : ${currencyCode}" th:value="${currency}"-->
-<!--                                    th:text="${currency}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                </tr>-->
-
-<!--                </thead>-->
-
-<!--            </table>-->
-
-            <button type="submit" class="btn btn-info col-2">Save</button>
-        </form>
-        <!-- Modal window confirmation -->
-
-        <a class="navigation__link example">Submit</a>
-        <div class="modal">
-            <div class="modal-content">
-                <p class="answerWindow">Confirm Your Transaction<br/></p>
-                <nav>
-                    <ul class="navigation__list">
-                        <li class="navigation__item">
-                            <a class="navigation__link" href="">Yes</a>
-                        </li>
-                        <li class="navigation__item">
-                            <a class="navigation__link" href="">Not</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-
-        <!-- Done modal window -->
-
-        <a class="navigation__link example">Confirm</a>
-        <div class="modal">
-            <div class="modal-content">
-
-                <p class="confirmationTitle">Currency converted</p>
-                <p class="answerWindow" th:utext="${'You have converted ' + webTransaction.sellSum + ' ' +
-        webTransaction.sellCurrencyCode + ' to ' + webTransaction.receiveSum + ' ' +
-        webTransaction.receiveCurrencyCode + '. Commission fee: ' + webTransaction.calculatedCommissionFee + ' ' +
-        webTransaction.sellCurrencyCode + '.'}"></p>
-                <nav>
-                    <ul class="navigation__list">
-                        <li class="navigation__item">
-                            <a class="navigation__link" href="">Done</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!--Main balance-->
-    <aside class="sidebar">
-        <!-- Main balance -->
-    </aside>
-
-</div>
-
-</div>
-
-<div class="page-content">
-    <div class="wizard-v5-content">
-        <div class="wizard-form">
-            <form class="form-register" id="form-register" th:action="@{/exchanger/processFormForTransaction}"
-                  th:object="${webTransaction}" method="POST">
-                <div id="form-total">
-                    <!-- SECTION 1 -->
-                    <h2>
-                        <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
-                        <span class="step-text">Convert</span>
-                    </h2>
-                    <section>
-                        <div class="inner">
-                            <div class="form-row">
-                                <div class="form-holder">
-                                    <label for="sell_sum" class="special-label">Sell</label>
-                                    <input type="number" placeholder="ex: 100" class="form-control" id="sell_sum" name="sell_sum">
-                                </div>
-
-                                <select th:field="*{sellCurrencyCode}" id="sellCurrencyCode" class="form-control">
-                                    <option value="">Select currency</option>
-                                    <option th:each="currency : ${currencyCode}" th:value="${currency}"
-                                            th:text="${currency}"></option>
-                                </select>
-                            </div>
+    <div class="page-content">
+        <div class="wizard-v5-content">
+            <div class="wizard-form">
+                <form class="form-register" id="form-register" th:action="@{/exchanger/processFormForTransaction}"
+                      th:object="${webTransaction}" method="POST">
+                    <div id="form-total">
+                        <h2>
+                            <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
+                            <span class="step-text">Convert</span>
+                        </h2>
+                        <section>
+                            <div class="inner">
+                                <div class="form-row form-row-date">
+                                    <div class="form-holder form-holder-2">
+                                        <label for="sell_sum" class="special-label">Sell</label>
+                                        <input type="number" placeholder="ex: 100" class="form-control" id="sell_sum" name="sell_sum">
 
 
+                                        <select th:field="*{sellCurrencyCode}" id="sell_currency_code" class="form-control">
+                                            <option value="">Select currency</option>
+                                            <option th:each="currency : ${currencyCode}" th:value="${currency}"
+                                                    th:text="${currency}"></option>
+                                        </select>
 
-                            <div class="form-row form-row-date">
-                                <div class="form-holder form-holder-2">
-                                    <div class="form-holder">
-                                        <label for="receive_sum" class="special-label">Receive</label>
-                                        <input type="number" placeholder="ex: 100" class="form-control" id="receive_sum" name="receive_sum">
                                     </div>
 
-                                    <br/>
+                                    <!--                                <select th:field="*{sellCurrencyCode}" id="sellCurrencyCode" class="form-control">-->
+                                    <!--                                    <option value="">Select currency</option>-->
+                                    <!--                                    <option th:each="currency : ${currencyCode}" th:value="${currency}"-->
+                                    <!--                                            th:text="${currency}"></option>-->
+                                    <!--                                </select>-->
+                                </div>
 
-                                    <select th:field="*{receiveCurrencyCode}" id="receiveCurrencyCode" class="form-control">
-                                        <option value="">Select currency</option>
-                                        <option th:each="currency : ${currencyCode}" th:value="${currency}"
-                                                th:text="${currency}"></option>
-                                    </select>
+
+
+                                <div class="form-row form-row-date">
+                                    <div class="form-holder form-holder-2">
+                                        <label for="receive_sum" class="special-label">Receive</label>
+                                        <input type="number" placeholder="ex: 100" class="form-control" id="receive_sum" name="receive_sum">
+
+                                        <br/>
+
+                                        <select th:field="*{receiveCurrencyCode}" id="receive_currency_code" class="form-control">
+                                            <option value="">Select currency</option>
+                                            <option th:each="currency : ${currencyCode}" th:value="${currency}"
+                                                    th:text="${currency}"></option>
+                                        </select>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    <h2>
-                        <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
-                        <span class="step-text">Confirm Details</span>
-                    </h2>
-                    <section>
-                        <div class="inner">
-                            <h3>Confirm Details</h3>
-                            <div class="form-row table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <tr class="space-row">
-                                        <th>Full Name:</th>
-                                        <td id="fullname-val"></td>
-                                    </tr>
-                                    <tr class="space-row">
-                                        <th>Sell sum:</th>
-                                        <td id="sell_sum_val"></td>
-                                    </tr>
-                                    <tr class="space-row">
-                                        <th>Sell currency code:</th>
-                                        <td id="sellCurrencyCode-val"></td>
-                                    </tr>
-                                    <tr class="space-row">
-                                        <th>Receive sum:</th>
-                                        <td id="receive_sum-val"></td>
-                                    </tr>
-                                    <tr class="space-row">
-                                        <th>Receive currency code:</th>
-                                        <td id="receiveCurrencyCode-val"></td>
-                                    </tr>
-                                    <tr class="space-row">
-                                        <th>Calculated commission fee:</th>
-                                        <td id=""></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                        <h2>
+                            <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
+                            <span class="step-text">Confirm Details</span>
+                        </h2>
+                        <section>
+                            <div class="inner">
+                                <h3>Confirm Details</h3>
+                                <div class="form-row table-responsive">
+                                    <table class="table table table-striped custom-table">
+                                        <tbody>
+                                        <tr class="space-row">
+                                            <th>Full Name:</th>
+                                            <td id="fullname-val"></td>
+                                        </tr>
+                                        <tr class="space-row">
+                                            <th>Sell sum:</th>
+                                            <td id="sell_sum-val"></td>
+                                        </tr>
+                                        <tr class="space-row">
+                                            <th>Sell currency code:</th>
+                                            <td id="sell_currency_code-val"></td>
+                                        </tr>
+                                        <tr class="space-row">
+                                            <th>Receive sum:</th>
+                                            <td id="receive_sum-val"></td>
+                                        </tr>
+                                        <tr class="space-row">
+                                            <th>Receive currency code:</th>
+                                            <td id="receive_currency_code-val"></td>
+                                        </tr>
+                                        <tr class="space-row">
+                                            <th>Calculated commission fee:</th>
+                                            <td id=""></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-            </form>
+                        </section>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
+
+    <!--Main content-->
+<!--    <div class="main_content">-->
+
+<!--        <form action="#" th:action="@{/exchanger/processFormForTransaction}"-->
+<!--              th:object="${webTransaction}" method="POST">-->
+
+<!--&lt;!&ndash;            <table class="table-responsive">&ndash;&gt;-->
+<!--&lt;!&ndash;                <thead class="table-dark">&ndash;&gt;-->
+<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <img>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <td>Sell</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <select th:field="*{sellCurrencyCode}">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="">Select currency</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option th:each="currency : ${currencyCode}" th:value="${currency}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                    th:text="${currency}"></option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <img>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <td>Receive</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <select th:field="*{sellCurrencyCode}">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="">Select currency</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option th:each="currency : ${currencyCode}" th:value="${currency}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                    th:text="${currency}"></option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                </thead>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </table>&ndash;&gt;-->
+
+<!--            <button type="submit" class="btn btn-info col-2">Save</button>-->
+<!--        </form>-->
+<!--        &lt;!&ndash; Modal window confirmation &ndash;&gt;-->
+
+<!--        <a class="navigation__link example">Submit</a>-->
+<!--        <div class="modal">-->
+<!--            <div class="modal-content">-->
+<!--                <p class="answerWindow">Confirm Your Transaction<br/></p>-->
+<!--                <nav>-->
+<!--                    <ul class="navigation__list">-->
+<!--                        <li class="navigation__item">-->
+<!--                            <a class="navigation__link" href="">Yes</a>-->
+<!--                        </li>-->
+<!--                        <li class="navigation__item">-->
+<!--                            <a class="navigation__link" href="">Not</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Done modal window &ndash;&gt;-->
+
+<!--        <a class="navigation__link example">Confirm</a>-->
+<!--        <div class="modal">-->
+<!--            <div class="modal-content">-->
+
+<!--                <p class="confirmationTitle">Currency converted</p>-->
+<!--                <p class="answerWindow" th:utext="${'You have converted ' + webTransaction.sellSum + ' ' +-->
+<!--        webTransaction.sellCurrencyCode + ' to ' + webTransaction.receiveSum + ' ' +-->
+<!--        webTransaction.receiveCurrencyCode + '. Commission fee: ' + webTransaction.calculatedCommissionFee + ' ' +-->
+<!--        webTransaction.sellCurrencyCode + '.'}"></p>-->
+<!--                <nav>-->
+<!--                    <ul class="navigation__list">-->
+<!--                        <li class="navigation__item">-->
+<!--                            <a class="navigation__link" href="">Done</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;Main balance&ndash;&gt;-->
+<!--    <aside class="sidebar">-->
+<!--        &lt;!&ndash; Main balance &ndash;&gt;-->
+<!--    </aside>-->
+
+</div>
+
 </div>
 
 

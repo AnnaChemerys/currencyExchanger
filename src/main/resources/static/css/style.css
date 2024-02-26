@@ -48,9 +48,6 @@ h2 {
   color: #fff;
 }
 
-.custom-table {
-  min-width: 900px;
-}
 .custom-table thead tr,
 .custom-table thead th {
   padding-bottom: 30px;
@@ -148,10 +145,9 @@ body {
 	-ms-align-items: center;
 	-moz-align-items: center;
 	-webkit-align-items: center;
-	background: #383a4f;
 }
 .wizard-v5-content   {
-	width: 851px;
+	width: 80%;
 	box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 	-o-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 	-ms-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
@@ -162,7 +158,7 @@ body {
 	-ms-border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
-	margin: 160px 0 115px;
+	margin: 1.5rem 0 115px;
 	font-family: 'Nunito', sans-serif;
 	font-size: 18px;
 	font-weight: 400;
@@ -172,13 +168,17 @@ body {
 }
 .wizard-v5-content .wizard-form {
 	width: 100%;
-	background: #525575;
 	border-radius: 10px;
 	-o-border-radius: 10px;
 	-ms-border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
+
+.form-control {
+    height: calc(1.5em + 0.75rem + 4px);
+}
+
 .form-register .steps {
 	margin-bottom: 35px;
 	background: #fff;
@@ -206,7 +206,7 @@ body {
     -moz-outline: none;
     -webkit-outline: none;
     position: relative;
-    width: 33.33%;
+    width: 50%;
     padding: 16.5px 37px;
 }
 .form-register .steps li::after {
@@ -219,10 +219,10 @@ body {
 	left: 100%;
 }
 .form-register .steps li:first-child {
-	width: 37.59%;
+	width 50%;
 }
 .form-register .steps li:last-child {
-	width: 31.15%;
+	width: 50%;
 }
 .form-register .steps li:last-child::after {
 	content: none;
@@ -291,10 +291,10 @@ body {
 	padding-top: 10px;
 }
 .form-register .content #form-total-p-0 {
-    padding: 10px 220px 5px 45px;
+    padding: 10px 45px 5px 45px;
 }
 .form-register .content #form-total-p-1 {
-    padding: 10px 220px 1px 45px;
+    padding: 10px 45px 1px 45px;
 }
 .form-register .content h2 {
 	display: none;
@@ -324,6 +324,8 @@ body {
     color: #666;
 }
 .inner .form-row .form-holder.form-holder-2 {
+    display: flex;
+    justify-content: space-between;
 	width: 100%;
 	position: relative;
 }
@@ -351,7 +353,7 @@ body {
 }
 .inner .form-row .form-holder input,
 .inner .form-row .form-holder select {
-    width: 100%;
+    width: 40%;
     padding: 11.5px 20px;
     border: none;
     border-radius: 3px;
@@ -454,7 +456,7 @@ body {
 }
 .inner .form-row.form-row-date .form-holder select {
 	float: left;
-    width: 16.7%;
+    width: 40%;
     margin-right: 20px;
 }
 .inner .form-row .form-holder select option {
@@ -486,7 +488,7 @@ body {
 	color: #fff;
 	padding:  3px 0 6px 45px;
 }
-.inner .form-row.table-responsive {
+/*.inner .form-row.table-responsive {
     border: none;
     border-radius: 5px;
     -o-border-radius: 5px;
@@ -525,7 +527,7 @@ body {
 	color: #fff;
 	font-size: 16px;
 	font-weight: 600;
-}
+}*/
 .form-register .actions {
 	padding: 0 45px 45px;
 }

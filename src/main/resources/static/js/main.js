@@ -34,20 +34,19 @@ $(function(){
         },
         onStepChanging: function (event, currentIndex, newIndex) {
             var fullname = $('#first_name').val() + ' ' + $('#last_name').val();
-            var email = $('#email').val();
-            var phone = $('#phone').val();
-            var address = $('#address').val();
-            var gender = $('form input[type=radio]:checked').val();
-            var account_name = $('#account_name').val();
-            var account_number = $('#account_number').val();
+            var sell_sum = $('#sell_sum').val();
+            var sell_currency_code = $('#sell_currency_code').val();
+            var receive_sum = $('#receive_sum').val();
+            var receive_currency_code = $('#receive_currency_code').val();
+//            var account_number = $('#account_number').val();
 
             $('#fullname-val').text(fullname);
-            $('#email-val').text(email);
-            $('#phone-val').text(phone);
-            $('#address-val').text(address);
-            $('#gender-val').text(gender);
-            $('#account-name-val').text(account_name);
-            $('#account-number-val').text(account_number);
+            $('#sell_sum-val').text(sell_sum);
+            $('#sell_currency_code-val').text(sell_currency_code);
+            $('#receive_sum-val').text(receive_sum);
+            $('#receive_currency_code-val').text(receive_currency_code);
+//            $('#account-name-val').text(account_name);
+//            $('#account-number-val').text(account_number);
 
             return true;
         }
