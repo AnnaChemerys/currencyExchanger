@@ -63,6 +63,8 @@
 
 <!--    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="nameOfCreator"/>-->
 
+    <div class="table-responsive">
+
     <table class="table table-striped custom-table">
         <thead>
         <tr>
@@ -78,15 +80,17 @@
 
             <td th:text="${tempUser.firstName + ' ' + tempUser.lastName}"></td>
             <td>
-                <a th:href="@{/show_transactions/{id}(id=${tempUser.id})}" class="more">Balances</a>
+                <a th:href="@{/show_balances/{id}(id=${tempUser.id})}" class="more">Balances</a>
             </td>
             <td>
-                <a th:href="@{/show_balances/{id}(id=${tempUser.id})}" class="more">Transactions</a>
+                <a th:href="@{/show_transactions/{id}(id=${tempUser.id})}" class="more">Transactions</a>
             </td>
 
         </tr>
         </tbody>
     </table>
+
+    </div>
 
 </div>
 
@@ -96,20 +100,6 @@
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var equations = /*[[${equations}]]*/;
-    /*]]>*/
-
-    $('#txtSearch').on('keyup', function(){
-        var value = $(this).val();
-        console.log('Value = ' + value);
-    });
-
-</script>
 
 </body>
 </html>

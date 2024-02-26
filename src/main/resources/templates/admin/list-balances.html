@@ -29,7 +29,7 @@
 
         <ul class="navigation__list">
             <li class="navigation__item">
-                <a class="navigation__link">Administration page</a>
+                <a class="navigation__link" th:href="@{/admin/administration-page}">Administration page</a>
             </li>
             <li class="navigation__item">
                 <a class="navigation__link" th:href="@{/admin/users}">Users</a>
@@ -57,44 +57,39 @@
 
 <div class="container">
 
-    <h3>Balances</h3>
-    <hr>
+    <h3 class="mb-5">Balances</h3>
 
-    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="username"/>
+<!--    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="username"/>-->
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <div class="table-responsive">
+
+    <table class="table table-striped custom-table">
+        <thead>
         <tr>
-            <th>Full user name</th>
-            <th>Balance</th>
+            <th scope="col">Full user name</th>
+            <th scope="col">Balance</th>
 
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="tempBalance : ${balances}">
+        <tr th:each="tempBalance : ${balances}" scope="row">
 
             <td th:text="${tempBalance.user.firstName + ' ' + tempBalance.user.lastName}"/>
-            <td th:text="${tempBalance.sumOnTheBalance + ' ' tempBalance.currencyCode}"/>
+            <td th:text="${tempBalance.sumOnTheBalance + ' ' + tempBalance.currencyCode}"/>
 
         </tr>
         </tbody>
     </table>
 
+    </div>
+
 </div>
 
-<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>-->
-
-<!-- <script th:inline="javascript">
-    /*<![CDATA[*/
-    var equations = /*[[${equations}]]*/;
-    /*]]>*/
-
-    $('#txtSearch').on('keyup', function(){
-        var value = $(this).val();
-        console.log('Value = ' + value);
-    });
-</script> -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 </html>

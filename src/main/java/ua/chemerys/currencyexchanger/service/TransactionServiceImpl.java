@@ -71,14 +71,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     }
 
-    //    @Override
-//    public void save(WebTransaction webTransaction) {
-//
-//        Transaction transaction = new Transaction();
-//
-//        transaction.
-//    }
-//
     @Override
     public Transaction addTransaction(WebTransaction webTransaction) {
 
@@ -109,28 +101,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     }
 
-//    @Override
-//    public BigDecimal getBalance(String username, String currencyCode) {
-//
-//        return userRepository.findByUserName(username).getUserBalances().stream()
-//                .filter(balance -> balance.getCurrencyCode().equals(currencyCode)).findFirst().get()
-//                .getSumOnTheBalance();
-//    }
-
-//    @Override
-//    public BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney) {
-//        return null;
-//    }
-
-//    @Override
-//    public BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney, String userName) {
-////        if (validateTransaction(sellMoney)) {
-////
-////        }
-//
-//        userRepository.findByUserName(userName).setCountOfTransactions(userRepository.findByUserName(userName).getCountOfTransactions() + 1);
-//        return null;
-//    }
 
     @Override
     public BigDecimal calculateCommissionFee(String userName, WebTransaction webTransaction) {
@@ -149,36 +119,6 @@ public class TransactionServiceImpl implements TransactionService {
         return calculatedCommissionFee;
     }
 
-//    @Override
-//    public BigDecimal calculateCommissionFee(String userName, Transaction transaction) {
-//
-//        float commissionFee = exchangerDetailsRepository.findAll().stream().findFirst().get().getCommissionFee();
-//        BigDecimal calculatedCommissionFee;
-//
-//        if (userRepository.findByUserName(userName).getCountOfTransactions() < 5) {
-//            calculatedCommissionFee = BigDecimal.valueOf(0);
-//        } else {
-//            calculatedCommissionFee = transaction.getSell().getAmountOfMoney()
-//                    .multiply(BigDecimal.valueOf(commissionFee)).
-//                    divide(BigDecimal.valueOf(100))
-//                    .setScale(2, RoundingMode.HALF_DOWN);
-//        }
-//        return calculatedCommissionFee;
-//    }
-
-//    @Override
-//    public boolean validateTransaction(String userName, WebTransaction webTransaction) {
-//
-//        return webTransaction.getSellSum().add(calculateCommissionFee(userName, webTransaction))
-//                .compareTo(balanceRepository
-//                        .findBalanceByUsernameAndCurrencyCode(userName, webTransaction.getSellCurrencyCode())
-//                        .getSumOnTheBalance()) >= 0;
-//    }
-
-//    @Override
-//    public boolean validateTransaction(BigDecimal sumForTransaction) {
-//        return sumForTransaction.add(calculateCommissionFee()).compareTo(getBalance()) >= 0;
-//    }
 
     @Override
     public List<Transaction> findByUsername(String username) {

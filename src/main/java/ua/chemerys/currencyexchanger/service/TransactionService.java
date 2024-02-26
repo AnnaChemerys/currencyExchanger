@@ -14,18 +14,10 @@ public interface TransactionService {
 
     void save(Transaction transaction);
 
-    //    void save(WebTransaction webTransaction);
     Transaction addTransaction(WebTransaction webTransaction);
-
-//    void addTransaction(WebTransaction webTransaction);
-
-//    BigDecimal getBalance(String currencyCode, String username);
-
-//    BigDecimal convert(BigDecimal sellMoney, BigDecimal receiveMoney);
 
     BigDecimal calculateCommissionFee(String userName, WebTransaction webTransaction);
 
-//    boolean validateTransaction(String userName, WebTransaction webTransaction);
 
     List<Transaction> findByUsername(String username);
 

@@ -46,6 +46,10 @@ h1, h2, h3, p {
     color: #fff;
 }
 
+a:hover {
+  color: gray;
+}
+
 .header {
     height: 50px;
     padding-top: 9px;

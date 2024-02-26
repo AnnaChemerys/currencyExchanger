@@ -80,9 +80,6 @@ public class RegistrationController {
 
         balanceService.addBalance(userName, "EUR", BigDecimal.valueOf(1000));
 
-//        balanceService.addBalance(userService.findByUserName(userName).getId(), "EUR",
-//                BigDecimal.valueOf(1000));
-
         // place user in the web http session for later use
         session.setAttribute("user", theWebUser);
 

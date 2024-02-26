@@ -26,16 +26,16 @@
 
         <ul class="navigation__list">
             <li class="navigation__item">
-                <a class="navigation__link navigation__link_active">Administration page</a>
+                <a class="navigation__link" th:href="@{/admin/administration-page}">Administration page</a>
             </li>
             <li class="navigation__item">
                 <a class="navigation__link" th:href="@{/admin/users}">Users</a>
             </li>
             <li class="navigation__item">
-                <a class="navigation__link" th:href="@{/admin/users-balances}">All balances</a>
+                <a class="navigation__link" th:href="@{/admin/usersBalances}">All balances</a>
             </li>
             <li class="navigation__item">
-                <a class="navigation__link" th:href="@{/admin/users-transactions}">All transactions</a>
+                <a class="navigation__link navigation__link_active" th:href="@{/admin/users-transactions}">All transactions</a>
             </li>
 
             <a class="navigation__link" href="javascript: document.logoutForm.submit()" role="menuitem">Logout</a>
@@ -54,26 +54,27 @@
 
 <div class="container">
 
-    <h3>Transactions</h3>
-    <hr>
+    <h3 class="mb-5">Transactions</h3>
 
-    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="username"/>
+    <div class="table-responsive">
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+<!--    <label for="txtSearch">Input</label><input id="txtSearch" type="text" name="username"/>-->
+
+    <table class="table table-striped custom-table">
+        <thead>
         <tr>
-            <th>Full user name</th>
-            <th>Sold</th>
-            <th></th>
-            <th>Received</th>
-            <th></th>
-            <th>Calculated commission fee</th>
-            <th>Date</th>
+            <th scope="col">Full user name</th>
+            <th scope="col">Sold</th>
+            <th scope="col"></th>
+            <th scope="col">Received</th>
+            <th scope="col"></th>
+            <th scope="col">Calculated commission fee</th>
+            <th scope="col">Date</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="tempTransaction : ${transactions}">
+        <tr th:each="tempTransaction : ${transactions}" scope="row">
 
             <td th:text="${tempTransaction.user.firstName + ' ' + tempTransaction.user.lastName}"/>
             <td th:text="${tempTransaction.sell.amountOfMoney + ' ' tempTransaction.sell.currencyCode}"/>
@@ -87,21 +88,14 @@
         </tbody>
     </table>
 
+    </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var equations = /*[[${equations}]]*/;
-    /*]]>*/
-
-    $('#txtSearch').on('keyup', function(){
-        var value = $(this).val();
-        console.log('Value = ' + value);
-    });
-
-</script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 </html>

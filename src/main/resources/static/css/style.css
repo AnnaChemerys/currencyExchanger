@@ -39,6 +39,10 @@ a:hover {
   text-decoration: none !important;
 }
 
+a:hover {
+  color: gray;
+}
+
 h2 {
   font-size: 20px;
   color: #fff;

@@ -55,7 +55,7 @@
 
 <div class="container">
 
-    <div class="balance">
+    <div class="table-responsive">
 
 <!--        <p>-->
 <!--            User: <span sec:authentication="principal.username"></span>-->
@@ -69,18 +69,18 @@
 
 <!--        </p>-->
 
-        <h3 lass="mb-5">MY BALANCES</h3>
-        <hr>
+<!--        <h3 class="mb-5">MY BALANCES</h3>-->
+<!--        <hr>-->
 
-        <table class="table-responsive">
+        <table class="table table-striped custom-table">
             <thead>
             <tr>
-                <th>MY BALANCES</th>
+                <th scope="col">MY BALANCES</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each="tempBalance : ${balances}">
+            <tr th:each="tempBalance : ${balances}"  scope="row">
 
                 <td th:text="${tempBalance.sumOnTheBalance + ' ' + tempBalance.currencyCode}"/>
 
