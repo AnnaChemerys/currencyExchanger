@@ -795,6 +795,7 @@ function paginationClickHandler(event)
             break;
 
         case "finish":
+//        <button type="submit" class="btn btn-info col-2">Save</button>
             finishStep(wizard, state);
             break;
 

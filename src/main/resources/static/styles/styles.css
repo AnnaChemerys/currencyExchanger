@@ -16,6 +16,47 @@ body {
     flex-direction: column;
 }
 
+.button, .tick {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.button {
+  width: 100px;
+  height: 40px;
+  background: #25b45b;
+  border-radius: 6px;
+  transition: all .15s cubic-bezier(0.67, 0.17, 0.40, 0.83);
+	border-color: inherit;
+	box-shadow: none;
+}
+
+.button svg {
+  width: 30px;
+  height: 30px;
+  transform: rotate(180deg);
+  transition: all 0.15s;
+}
+
+.button__circle {
+  width: 48px;
+  height: 48px;
+  background: mediumseagreen;
+  border-radius: 50%;
+  transform: rotate(-180deg);
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.tick {
+  color: white;
+  transition: all .15s;
+}
+
 .container {
   margin-top: 3%;
   width: 80%;

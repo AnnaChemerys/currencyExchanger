@@ -51,6 +51,10 @@
 
         <p class="header__hashtag">#CurrencyExchanger</p>
 
+        <p th:if="${session.user}" >
+                    <p th:text="${session.user.firstName} + ' ' + ${session.user.lastName}"></p>
+        </p>
+
     </nav>
 </header>
 
@@ -156,10 +160,10 @@
                                 <div class="form-row table-responsive">
                                     <table class="table table table-striped custom-table">
                                         <tbody>
-                                        <tr class="space-row">
-                                            <th>Full Name:</th>
-                                            <td id="fullname-val"></td>
-                                        </tr>
+<!--                                        <tr class="space-row">-->
+<!--                                            <th>Full Name:</th>-->
+<!--                                            <td id="fullname-val"></td>-->
+<!--                                        </tr>-->
                                         <tr class="space-row">
                                             <th>Sell sum:</th>
                                             <td id="sell_sum-val"></td>
@@ -176,12 +180,14 @@
                                             <th>Receive currency code:</th>
                                             <td id="receive_currency_code-val"></td>
                                         </tr>
-                                        <tr class="space-row">
-                                            <th>Calculated commission fee:</th>
-                                            <td id=""></td>
-                                        </tr>
+<!--                                        <tr class="space-row">-->
+<!--                                            <th>Calculated commission fee:</th>-->
+<!--                                            <td id=""></td>-->
+<!--                                        </tr>-->
                                         </tbody>
                                     </table>
+
+<!--                                    <button type="submit" class="btn btn-info col-2">Save</button>-->
                                 </div>
                             </div>
                         </section>
@@ -283,8 +289,7 @@
 
 </div>
 
-
-
+</body>
 
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery.steps.js"></script>
@@ -292,5 +297,4 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 
-</body>
 </html>
