@@ -58,6 +58,7 @@ public class RatesParser {
     public List<String> getListCurrenciesCodes() {
 
         return (List<String>) getCurrencyRange().keySet().stream().sorted().toList();
+
     }
 
     public BigDecimal getCurrencyRate(String currencyCode) {

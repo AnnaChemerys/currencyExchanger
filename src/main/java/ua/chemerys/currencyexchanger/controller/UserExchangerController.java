@@ -49,6 +49,10 @@ public class UserExchangerController {
 
         User theUser = userService.findByUserName(userName);
 
+        System.out.println(theUser.getUserName() + theUser.getCountOfTransactions());
+
+        List<String> currencyCodesAvailableToSellForCurrentUser = transactionService.getCurrencyCodesAvailableToSellForCurrentUser(theUser);
+
         List<String> currencyCode = ratesParser.getListCurrenciesCodes();
 
         WebTransaction webTransaction = new WebTransaction();
@@ -59,11 +63,15 @@ public class UserExchangerController {
 
         modelMap.addAttribute("user", theUser);
 
+        modelMap.addAttribute("currenciesAvailableToSell", currencyCodesAvailableToSellForCurrentUser);
+
         modelMap.addAttribute("currencyCode", currencyCode);
 
         modelMap.addAttribute("webTransaction", webTransaction);
 
         modelMap.addAttribute("balances", balances);
+
+        modelMap.addAttribute("balanceService", balanceService);
 
         // send over to our form
 
@@ -76,7 +84,31 @@ public class UserExchangerController {
                                       Principal principal,
                                       ModelMap theModelMap) {
 
-        User theUser = userService.findByUserName(principal.getName());
+        String userName = principal.getName();
+
+        User theUser = userService.findByUserName(userName);
+
+        System.out.println(theUser.getUserName() + theUser.getCountOfTransactions());
+
+        List<String> currencyCodesAvailableToSellForCurrentUser = transactionService.getCurrencyCodesAvailableToSellForCurrentUser(theUser);
+
+        List<String> currencyCode = ratesParser.getListCurrenciesCodes();
+
+        List<Balance> balances = balanceService.findByUser(theUser);
+
+        // set user in the model prepopulate form
+
+        theModelMap.addAttribute("user", theUser);
+
+        theModelMap.addAttribute("currenciesAvailableToSell", currencyCodesAvailableToSellForCurrentUser);
+
+        theModelMap.addAttribute("currencyCode", currencyCode);
+
+        theModelMap.addAttribute("webTransaction", webTransaction);
+
+        theModelMap.addAttribute("balances", balances);
+
+        theModelMap.addAttribute("balanceService", balanceService);
 
         if (theBindingResult.hasErrors()) {
             return "user/user-show";

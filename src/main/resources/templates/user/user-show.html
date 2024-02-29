@@ -117,7 +117,7 @@
 
                                         <select th:field="*{sellCurrencyCode}" id="sell_currency_code" class="form-control">
                                             <option value="">Select currency</option>
-                                            <option th:each="currency : ${currencyCode}" th:value="${currency}"
+                                            <option th:each="currency : ${currenciesAvailableToSell}" th:value="${currency}"
                                                     th:text="${currency}"></option>
                                         </select>
 

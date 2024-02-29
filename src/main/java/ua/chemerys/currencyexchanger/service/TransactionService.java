@@ -1,6 +1,7 @@
 package ua.chemerys.currencyexchanger.service;
 
 import ua.chemerys.currencyexchanger.entity.Transaction;
+import ua.chemerys.currencyexchanger.entity.User;
 import ua.chemerys.currencyexchanger.webDto.WebTransaction;
 
 import java.math.BigDecimal;
@@ -26,5 +27,7 @@ public interface TransactionService {
     BigDecimal calculateReceiveFromSell(BigDecimal sell, String sellCurrencyCode, String receiveCurrencyCode);
 
     BigDecimal calculateCoefficientForCurrenciesExceptEUR(String receiveCurrencyCode, String sellCurrencyCode);
+
+    List<String> getCurrencyCodesAvailableToSellForCurrentUser(User currentUser);
 
 }

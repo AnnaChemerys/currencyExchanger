@@ -2,6 +2,7 @@ package ua.chemerys.currencyexchanger.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.chemerys.currencyexchanger.entity.Balance;
 import ua.chemerys.currencyexchanger.entity.SumUnit;
 import ua.chemerys.currencyexchanger.entity.Transaction;
 import ua.chemerys.currencyexchanger.entity.User;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -162,5 +164,18 @@ public class TransactionServiceImpl implements TransactionService {
 
         return ratesParser.getCurrencyRate(sellCurrencyCode).divide(ratesParser.getCurrencyRate(receiveCurrencyCode))
                 .setScale(2, RoundingMode.HALF_DOWN);
+    }
+
+    @Override
+    public List<String> getCurrencyCodesAvailableToSellForCurrentUser(User currentUser) {
+
+        List<String> currencyCodesOfUserBalances = balanceRepository.findAll().stream()
+                .filter(balance -> balance.getUser().equals(currentUser))
+                .map(Balance::getCurrencyCode)
+                .toList();
+
+        return ratesParser.getListCurrenciesCodes().stream()
+                .filter(currencyCodesOfUserBalances::contains)
+                .toList();
     }
 }
