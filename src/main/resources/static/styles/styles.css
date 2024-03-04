@@ -21,6 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: sans-serif;
+  border-color: #25b45b;
 }
 
 .button {
@@ -29,7 +30,7 @@ body {
   background: #25b45b;
   border-radius: 6px;
   transition: all .15s cubic-bezier(0.67, 0.17, 0.40, 0.83);
-	border-color: inherit;
+	border-color: #25b45b;
 	box-shadow: none;
 }
 
@@ -38,6 +39,7 @@ body {
   height: 30px;
   transform: rotate(180deg);
   transition: all 0.15s;
+  border-color: #25b45b;
 }
 
 .button__circle {
@@ -46,6 +48,7 @@ body {
   background: mediumseagreen;
   border-radius: 50%;
   transform: rotate(-180deg);
+  border-color: #25b45b;
 }
 
 .button:hover {
@@ -55,6 +58,7 @@ body {
 .tick {
   color: white;
   transition: all .15s;
+  border-color: #25b45b;
 }
 
 .container {
@@ -310,6 +314,42 @@ a:hover {
     width: 340px;
     height: 140px;
     margin-bottom: 25px;
+}
+
+.sign-in {
+    margin: auto;
+    box-sizing: border-box;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form {
+    padding: 10px 45px 5px 45px;
+}
+
+.login-header {
+    margin-bottom: 35px;
+    background: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -o-justify-content: space-between;
+    -ms-justify-content: space-between;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    list-style: none;
+    padding: 10px 45px 5px 45px;
+    margin-top: 0;
+    width: 100%;
+    color: #303030;
+}
+
+.login-header h2 span{
+
+    color: #303030;
 }
 
 @media (max-width: 1024px) {
