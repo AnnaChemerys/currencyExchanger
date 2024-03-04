@@ -71,20 +71,30 @@ button.addEventListener('click', function() {
 //                    //append a submit type button
 //                    $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
 //                    };
-            var fullname = $('#first_name').val() + ' ' + $('#last_name').val();
+            var userName = $('#userName').val();
             var sell_sum = $('#sell_sum').val();
             var sell_currency_code = $('#sell_currency_code').val();
             var receive_sum = $('#receive_sum').val();
             var receive_currency_code = $('#receive_currency_code').val();
 //            var account_number = $('#account_number').val();
 
-            $('#fullname-val').text(fullname);
+            var user_name = $('#user_name').val();
+            var first_name = $('#first_name').val();
+            var last_name = $('#last_name').val();
+            var email = $('#email').val();
+
+            $('#userName-val').text(userName);
             $('#sell_sum-val').text(sell_sum);
             $('#sell_currency_code-val').text(sell_currency_code);
             $('#receive_sum-val').text(receive_sum);
             $('#receive_currency_code-val').text(receive_currency_code);
-//            $('#account-name-val').text(account_name);
+//            $('#userName-val').text(userName);
 //            $('#account-number-val').text(account_number);
+
+            $('#user_name-val').text(user_name);
+            $('#first_name-val').text(first_name);
+            $('#last_name-val').text(last_name);
+            $('#email-val').text(email);
 
             return true;
         },

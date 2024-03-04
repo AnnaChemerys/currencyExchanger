@@ -46,7 +46,9 @@ public class RegistrationController {
 
         theModel.addAttribute("webUser", new WebUser());
 
-        return "register/registration-form";
+//        return "register/registration-form";
+
+        return "register/registration-form-dark-theme";
     }
 
     @PostMapping("/processRegistrationForm")
@@ -60,7 +62,8 @@ public class RegistrationController {
 
         // form validation
         if (theBindingResult.hasErrors()) {
-            return "register/registration-form";
+//            return "register/registration-form";
+            return "register/registration-form-dark-theme";
         }
 
         // check the database if user already exists
@@ -70,7 +73,8 @@ public class RegistrationController {
             theModel.addAttribute("registrationError", "User name already exists.");
 
             logger.warning("User name already exists.");
-            return "register/registration-form";
+//            return "register/registration-form";
+            return "register/registration-form-dark-theme";
         }
 
         // create user account and store in the database

@@ -6,10 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
+    @GetMapping("/")
+    public String showMyHomePage() {
+
+        return "index";
+    }
+
     @GetMapping("/showMyLoginPage")
     public String showMyLoginPage() {
 
-        return "basic/fancy-login";
+        return "fancy-login";
     }
 
     // add request mapping for /access-denied
@@ -17,6 +23,6 @@ public class LoginController {
     @GetMapping("/access-denied")
     public String showAccessDenied() {
 
-        return "basic/access-denied";
+        return "access-denied";
     }
 }

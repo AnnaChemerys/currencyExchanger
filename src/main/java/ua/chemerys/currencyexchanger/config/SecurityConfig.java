@@ -44,7 +44,11 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                //.requestMatchers("/").hasRole("EMPLOYEE")
+                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/styles/**").permitAll()
+                                .requestMatchers("/fonts/**").permitAll()
+                                .requestMatchers("/css/**").permitAll()
+                                .requestMatchers("/js/**").permitAll()
                                 .requestMatchers("/users/**").hasRole("USER")
                                 .requestMatchers("/admins/**").hasRole("ADMIN")
                                 .requestMatchers("/register/**").permitAll()
@@ -52,13 +56,20 @@ public class SecurityConfig {
                 )
                 .formLogin(form ->
                         form
+
+//                                .defaultSuccessUrl("/home")
                                 .loginPage("/showMyLoginPage")
                                 .loginProcessingUrl("/authenticateTheUser")
 
                                 .successHandler(urlAuthenticationSuccessHandler)
                                 .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll)
+
+                .logout(logout ->
+                        logout
+                                .permitAll()
+                                .logoutSuccessUrl("/"))
+//                .logout(LogoutConfigurer::permitAll)
                 .exceptionHandling(configurer ->
                         configurer.accessDeniedPage("/access-denied")
                 );

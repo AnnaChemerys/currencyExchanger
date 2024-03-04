@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Currency Converter</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet"/>
+
+    <link th:href="@{/fonts/icomoon/style.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/nunito-font.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css}" rel="stylesheet" type="text/css"/>
+
+    <!-- Style -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <nav class="header__navigation navigation">
+
+        <ul class="navigation__list">
+            <li class="navigation__item">
+                <a class="navigation__link navigation__link_active">Home</a>
+            </li>
+            <li class="navigation__item">
+                <a class="navigation__link" th:href="@{/showMyLoginPage}">Sign in</a>
+            </li>
+            <li class="navigation__item">
+                <a class="navigation__link" th:href="@{/register/showRegistrationForm}">Sign up</a>
+            </li>
+        </ul>
+
+        <p class="header__hashtag">#CurrencyExchanger</p>
+    </nav>
+</header>
+
+<h3>How does it work?</h3>
+
+<p>Currency is converted using an exchange rate. This rate represents the relative price of two currencies.
+    For example, if the exchange rate between the Australian and US dollars was 0.7200, that means that for every Australian dollar, you would receive 0.72 US cents.</p>
+
+</body>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery.steps.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+</html>

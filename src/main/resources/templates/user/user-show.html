@@ -3,7 +3,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
 
@@ -52,7 +51,7 @@
         <p class="header__hashtag">#CurrencyExchanger</p>
 
         <p th:if="${session.user}" >
-                    <p th:text="${session.user.firstName} + ' ' + ${session.user.lastName}"></p>
+                    <p th:text="${session.user.firstName} + ' ' + ${session.user.lastName} + ' ' + ${session.user.userName}"></p>
         </p>
 
     </nav>
@@ -111,6 +110,20 @@
                             <div class="inner">
                                 <div class="form-row form-row-date">
                                     <div class="form-holder form-holder-2">
+
+<!--                                        <p th:text="${session.user.userName}"></p>-->
+
+
+<!--                                        // ToDo-->
+<!--                                        <input type="hidden" th:value="${userName}" th:attr="userName=${session.user.userName}" id="userName" name="userName">-->
+
+<!--                                        <input type="text" th:attr="value = ${session.user.userName}" th:field="*{__${userName}__}" id="userName" name="userName">-->
+
+<!--                                        <input type="text" th:field="*{__${userName('session.user.userName')}__}" id="userName" name="userName">-->
+
+<!--                                        <input type="hidden" th:attr="value=${session.user.userName}" th:field="*{userName}" id="userName" name="userName">-->
+
+<!--                                        <input type="hidden" th:field="*{userName}">-->
                                         <label for="sell_sum" class="special-label">Sell</label>
                                         <input type="number" placeholder="ex: 100" class="form-control" id="sell_sum" name="sell_sum">
 
@@ -160,10 +173,10 @@
                                 <div class="form-row table-responsive">
                                     <table class="table table table-striped custom-table">
                                         <tbody>
-<!--                                        <tr class="space-row">-->
-<!--                                            <th>Full Name:</th>-->
-<!--                                            <td id="fullname-val"></td>-->
-<!--                                        </tr>-->
+                                        <tr class="space-row">
+                                            <th>Full Name:</th>
+                                            <td id="userName-val"></td>
+                                        </tr>
                                         <tr class="space-row">
                                             <th>Sell sum:</th>
                                             <td id="sell_sum-val"></td>

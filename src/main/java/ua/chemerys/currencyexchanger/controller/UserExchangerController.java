@@ -57,6 +57,8 @@ public class UserExchangerController {
 
         WebTransaction webTransaction = new WebTransaction();
 
+        webTransaction.setUserName(userName);
+
         List<Balance> balances = balanceService.findByUser(theUser);
 
         // set user in the model prepopulate form
@@ -93,6 +95,8 @@ public class UserExchangerController {
         List<String> currencyCodesAvailableToSellForCurrentUser = transactionService.getCurrencyCodesAvailableToSellForCurrentUser(theUser);
 
         List<String> currencyCode = ratesParser.getListCurrenciesCodes();
+
+        webTransaction.setUserName(userName);
 
         List<Balance> balances = balanceService.findByUser(theUser);
 

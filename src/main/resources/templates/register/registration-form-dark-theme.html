@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet"/>
+
+    <link th:href="@{/fonts/icomoon/style.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/nunito-font.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css}" rel="stylesheet" type="text/css"/>
+
+    <!-- Style -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <title>Registration Form</title>
+</head>
+<body>
+
+<header class="header">
+
+    <nav class="header__navigation navigation">
+
+        <ul class="navigation__list">
+            <li class="navigation__item">
+                <a class="navigation__link" th:href="@{/}">Home</a>
+            </li>
+            <li class="navigation__item">
+                <a class="navigation__link" th:href="@{/showMyLoginPage}">Sign in</a>
+            </li>
+            <li class="navigation__item">
+                <a class="navigation__link navigation__link_active" th:href="@{/register/showRegistrationForm}">Sign up</a>
+            </li>
+        </ul>
+
+        <p class="header__hashtag">#CurrencyExchanger</p>
+    </nav>
+</header>
+
+<div class="page-content">
+    <div class="wizard-v5-content">
+        <div class="wizard-form">
+            <form class="form-register" id="form-register" action="#" th:action="@{/register/processRegistrationForm}"
+                  th:object="${webUser}" method="POST">
+                <div id="form-total">
+                    <h2>
+                        <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
+                        <span class="step-text">Personal information</span>
+                    </h2>
+                    <section>
+                        <div class="inner">
+
+                            <!-- Place for messages: error, alert etc ... -->
+                            <div class="form-group">
+                                <div class="col-xs-15">
+                                    <div>
+
+                                        <!-- Check for login error -->
+
+                                        <div th:if="${param.registrationError}">
+
+                                            <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                                                <span th:text="${param.registrationError}"></span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-holder form-holder-2">
+
+                                    <!-- User name -->
+
+                                    <label for="user_name">Username (*)</label>
+                                        <input type="text" th:field="*{userName}" placeholder="ex: Annie" class="form-control" id="user_name" name="user_name"/>
+
+                                    <div th:if="${#fields.hasErrors('userName')}"
+                                         style="margin-bottom: 25px" class="text-danger">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}"/>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-row">
+                                <div class="form-holder form-holder-2">
+                                    <label for="password">Password (*)</label>
+                                <input type="password" th:field="*{password}" placeholder="Please use strong password" class="form-control" id="password" name="password"/>
+                            </div>
+                            </div>
+
+                            <div th:if="${#fields.hasErrors('password')}"
+                                 style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}"/>
+                                </ul>
+                            </div>
+
+                            <!-- First Name -->
+                            <div class="form-row">
+                                <div class="form-holder form-holder-2">
+                                    <label for="first_name">First name (*)</label>
+                                <input type="text" th:field="*{firstName}" placeholder="ex: Ann"
+                                       class="form-control" id="first_name" name="first_name"/>
+                            </div>
+                            </div>
+
+                            <div th:if="${#fields.hasErrors('firstName')}"
+                                 style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('firstName')}" th:text="'First name ' + ${err}"/>
+                                </ul>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="form-row">
+                                <div class="form-holder form-holder-2">
+                                    <label for="last_name">Last name (*)</label>
+                                <input type="text" th:field="*{lastName}" placeholder="ex: Smith" class="form-control" id="last_name" name="last_name"/>
+
+                                </div>
+                            </div>
+
+                            <div th:if="${#fields.hasErrors('lastName')}"
+                                 style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('lastName')}" th:text="'Last name ' + ${err}"/>
+                                </ul>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-row">
+                                <div class="form-holder form-holder-2">
+                                    <label for="email">Email  (*)</label>
+                                <input type="text" th:field="*{email}" placeholder="ex: ann@email.com" class="form-control" id="email" name="email"/>
+                            </div>
+                            </div>
+
+                            <div th:if="${#fields.hasErrors('email')}"
+                                 style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}"/>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <h2>
+                        <span class="step-icon"><i class="zmdi zmdi-check"></i></span>
+                        <span class="step-text">Confirm Details</span>
+                    </h2>
+                    <section>
+                        <div class="inner">
+                            <h3>Confirm Details</h3>
+                            <div class="form-row table-responsive">
+                                <table class="table table table-striped custom-table">
+                                    <tbody>
+                                    <tr class="space-row">
+                                        <th>Username:</th>
+                                        <td id="user_name-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>First name:</th>
+                                        <td id="first_name-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Last name:</th>
+                                        <td id="last_name-val"></td>
+                                    </tr>
+                                    <tr class="space-row">
+                                        <th>Email:</th>
+                                        <td id="email-val"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <!--                                    <button type="submit" class="btn btn-info col-2">Save</button>-->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery.steps.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+</html>
